@@ -1,0 +1,2 @@
+<?php
+new SoapClient(null,[]);
