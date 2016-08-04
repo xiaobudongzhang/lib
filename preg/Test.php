@@ -1,5 +1,4 @@
 <?php
-$pattern='~d{0}~';
-$str=$argv[1];
-preg_match($pattern, $str,$matchs);
-print_r($matchs);
+$str="3+2/7-9";
+
+print_r(preg_split('~(?:[+\-*\/])~', $str,-1,PREG_SPLIT_DELIM_CAPTURE));
