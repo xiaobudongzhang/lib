@@ -17,7 +17,7 @@ function checkbirthdate($month, $day, $year) {
 	}
 }
 
-if (checkbirthdate ( 12, 3, 2000 )) {
+if (checkbirthdate ( 12, 3, 200 )) {
 	print "You may use this web site.";
 } else {
 	print "You are too young (or too old!!) to proceed.";
