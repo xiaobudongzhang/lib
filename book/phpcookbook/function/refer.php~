@@ -1,0 +1,13 @@
+<?php
+fucntion &array_find_value($needle,&$stack){
+	 foreach($stack as $key=>$value){
+	 		if($needle==$value){
+			return $stack[$key];
+			}
+	 }
+}
+$arr=[
+'a'
+'b'
+];
+$band=&array_find_value('the door',$arr);

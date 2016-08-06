@@ -1,0 +1,6 @@
+<?php
+$sem_id=100;
+$seg_id=200;
+
+$sem=sem_get($sem_id,1,0600);
+sem_acquire($sem)  or die("cant aquire sem");

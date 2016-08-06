@@ -1,4 +1,5 @@
 <?php
+
 // 注意空格
 $text = "Birthday: May 11, 1918.";
 $when = DateTime::createFromFormat ( "*: F j, Y.|", $text );
@@ -99,3 +100,9 @@ foreach ($range3 as $m) {
 }
 echo PHP_EOL;
 print_r(cal_info());
+
+$when = new DateTime();
+
+print $when->format('r');
+echo PHP_EOL;
+

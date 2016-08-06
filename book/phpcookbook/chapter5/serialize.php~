@@ -1,0 +1,6 @@
+<?php
+$pantry = array('sugar' => '2 lbs.','butter' => '3 sticks');
+$fp=fopen('/tmp/testvar','wb') or die(' cant open file');
+fputs($fp,serialize($fp));
+var_dump(fgets($fp));
+fclose($fp);

@@ -1,0 +1,6 @@
+<?php
+$tests = array('test1.php', 'test10.php', 'test11.php', 'test2.php');
+usort($tests,function($a,$b){
+	return  strnatcmp($a,$b);
+});
+print_r($tests);
