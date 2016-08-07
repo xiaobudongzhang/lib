@@ -21,4 +21,10 @@ class data{
 $data=new data();
 $data->name=1;
 
-echo $data::$x;
+//echo $data::$x;
+
+//Reflection::export(new ReflectionClass('data'));
+
+//print_r($out);
+
+print_r($data instanceof data);

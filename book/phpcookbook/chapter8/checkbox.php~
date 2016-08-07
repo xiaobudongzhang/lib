@@ -1,0 +1,8 @@
+<?php
+$choices = array('eggs' => 'Eggs Benedict',
+'toast' => 'Buttered Toast with Jam',
+'coffee' => 'Piping Hot Coffee');
+
+if(array_intersect($_GET['food'],array_keys($choices))!=$_GET['food']){
+echo "not valid!";
+}
