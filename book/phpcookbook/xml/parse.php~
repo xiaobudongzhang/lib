@@ -1,0 +1,3 @@
+<?php
+$sx=simplexml_load_file('./test.xml');
+print_r($sx);

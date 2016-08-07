@@ -11,3 +11,4 @@ $title->setAttribute('e',3);
 $dom->formatOutput=true;
 $out= $dom->saveXML();
 echo ($out);
+$dom->save('.test.xml');
