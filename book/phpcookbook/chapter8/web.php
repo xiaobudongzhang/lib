@@ -7,8 +7,8 @@ $vars = array('name' => 'Oscar the Grouch',
 'favorite_punctuation' => '4');
 
 
- $query_string= http_build_query($vars);
-var_dump($query_string);
+// $query_string= http_build_query($vars);
+//var_dump($query_string);
 //var_export($_SERVER['REQUEST_URI']);
-var_dump($_GET);
+//var_dump($_GET);
 //phpinfo();

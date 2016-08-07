@@ -1,2 +1,2 @@
 <?php
-new PDO("sqlite::memory");xxx
+new PDO("sqlite::memory");x
