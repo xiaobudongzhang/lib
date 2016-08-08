@@ -1,0 +1,12 @@
+<?php
+$body = '
+<p>I like pickles and herring.</p>
+<a href="pickle.php"><img src="pickle.jpg"/>A pickle picture</a>
+I have a herringbone-patterned toaster cozy.
+<herring>Herring is not a real HTML element!</herring>
+';
+
+$pattern="{(<(?:\"[^\"]*\"|'[^']*'|[^'\">])*>)}";
+$parts=preg_split($pattern,$body,-1,PREG_SPLIT_DELIM_CAPTURE);
+
+print_r($parts);

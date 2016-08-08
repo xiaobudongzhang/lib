@@ -1,0 +1,7 @@
+<?php
+$s=simplexml_load_file('./test.xml');
+$title=$s->xpath('/book/title');
+
+foreach($titles as $title){
+		print_r($title);
+}
