@@ -1,0 +1,6 @@
+<?php
+$fh=fopen('test.txt','wb') or die('cant open');
+$c=curl_init("http://127.0.0.1:8888/test.php");
+curl_setopt($c,CURLOPT_FILE,$fh);
+culr_exec($c);
+curl_close($c);

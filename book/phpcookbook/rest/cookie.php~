@@ -1,0 +1,16 @@
+<?php
+$cookie_jar='/tmp/cookie';
+
+$c=curl_init('http:/127.0.0.1/test.php');
+//curl_setopt($c,CURLOPT_RETURNTRANSFER,true);
+curl_setopt($c,CUROPT_COOKIEJAR,$cookie_jar);
+$page=culr_exec($c);
+curl_close($c);
+
+
+/**$c=curl_init('http:/127.0.0.1/test.php');
+//curl_setopt($c,CURLOPT_RETURNTRANSFER,true);
+curl_setopt($c,CUROPT_COOKIEFILE,$cookie_jar);
+$page=culr_exec($c);
+curl_close($c);
+*/

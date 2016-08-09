@@ -6,4 +6,4 @@ curl_setopt($c, CURLOPT_USERPWD, 'david:hax0r');
 $page=curl_exec($c);
 curl_close($c);
 
-print_r($page);
+//print_r($page);
