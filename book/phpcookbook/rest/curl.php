@@ -1,6 +1,7 @@
 <?php
 $url="http://baike.sogou.com/Home.v";
 $c=curl_init($url);
+curl_setopt($c, CURLOPT_VERBOSE, true);
 curl_setopt($c, CURLOPT_HEADER, true);
 curl_setopt($c, CURLOPT_NOBODY, true);
 curl_setopt($c,CURLOPT_RETURNTRANSFER,true);
