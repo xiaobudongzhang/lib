@@ -1,7 +1,11 @@
 <?php
-$client_id='47be746b9d7f133dc976';
-$re_url="http://www.testesf.com:8888/authre.php";
-echo $url="https://github.com/login/oauth/authorize?client_id={$client_id}&state=byz&redirect_uri={$re_url}";
+print_r($_GET);
 
-//$re=file_get_contents($url);
-//print_r($re);
+$url="https://github.com/login/oauth/access_token";//post 
+
+/* Name	Type	Description
+client_id	string	Required. The client ID you received from GitHub when you registered.
+client_secret	string	Required. The client secret you received from GitHub when you registered.
+code	string	Required. The code you received as a response to Step 1.
+redirect_uri	string	The URL in your application where users will be sent after authorization. See details below about redirect urls.
+state	string	The unguessable random string you optionally provided in Step 1. */

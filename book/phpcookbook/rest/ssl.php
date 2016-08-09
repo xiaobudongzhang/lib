@@ -9,4 +9,4 @@ $arrContextOptions=array(
 $url='https://github.com/';
 $response = file_get_contents($url, false, stream_context_create($arrContextOptions));
 
-echo $response;
+echo $response;//显示登陆界面
