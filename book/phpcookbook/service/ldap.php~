@@ -1,0 +1,2 @@
+<?php
+$ds = ldap_connect('ldap.baidu.com');
