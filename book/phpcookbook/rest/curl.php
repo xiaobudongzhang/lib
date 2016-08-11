@@ -11,6 +11,6 @@ curl_close($c);
 
 
 //print_r($page);
-=======
+
 print_r($page);
 //file_put_contents('E://t.log',$page);
