@@ -1,6 +1,50 @@
 <?php
+echo "afdafdasfd";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //phpinfo();
-echo file_get_contents('https://github.com/');
+//echo file_get_contents('https://github.com/');
 /* $packed = pack('S4',1974,106,28225,32725);
 print_r($packed);
 
@@ -24,5 +68,5 @@ print htmlspecialchars($html, ENT_QUOTES);
 // single- and double-quotes
 print htmlspecialchars($html, ENT_NOQUOTES); // neither */
 //sleep(6);
-echo 'hi';
-echo PHP_EOL;
+//echo 'hi';
+//echo PHP_EOL;
