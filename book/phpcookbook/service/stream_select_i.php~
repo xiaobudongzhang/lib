@@ -1,0 +1,16 @@
+<?php
+$handle = fopen('./if_blocked', 'w');
+$i = 1;
+$symbols = ['a','l','e','k','s','a','n','d','r'];
+while ($i < 4) {
+    $w = [$handle];
+    $n = @stream_select($r = null, $w, $e = null, 0, 100000);
+    if ($w) {
+        $symbol = $symbols[array_rand($symbols)];
+        fwrite($handle, $symbol);
+        echo "written: {$symbol}\n";
+	echo time()."\n";
+        sleep(4);
+        $i++;
+    }
+}

@@ -1,5 +1,5 @@
 <?php
-$timeout=0;
+$timeout=5;
 $mitime=2000000;
 $result=[];
 $sockets=[];
@@ -25,11 +25,12 @@ while($delay>0){
 $delay-=3;
 }
 
-//var_dump($sockets);
+var_dump($sockets);
 
 while(count($sockets)){
 	$read=$sockets;
-	 stream_select($read, $w=null, $e=null, $timeout,$mitime);
+	 $rest=stream_select($read, $w=null, $e=null, 0,1000000);
+	 ////////#####rest 为0超时  不做处理的话继续请求等待
 	 if(count($read)){
 	 
 		foreach($read as $r){
@@ -38,11 +39,13 @@ while(count($sockets)){
 			      $data=fread($r,$convenient_read_block);
 			      if(strlen($data)==0){
 			       echo "Stream " . $id . " closes at " . date('h:i:s') . ".\n";
+			      
                         fclose($r); 
                         unset($sockets[$id]); 
 			      }else{
 			       $result[$id] = $data; 
 			      }
+			      // echo time()."\n";
 		}
 	 } else{
 	 
