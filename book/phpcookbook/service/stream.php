@@ -1,6 +1,6 @@
 <?php
 $timeout=0;
-$mitime=500000;
+$mitime=2000000;
 $result=[];
 $sockets=[];
 $convenient_read_block=8192;
@@ -14,12 +14,13 @@ while($delay>0){
 	$errstr,
 	STREAM_CLIENT_ASYNC_CONNECT|STREAM_CLIENT_CONNECT
 	);
+//	stream_set_timeout($s,1);
 	if($s){
 	$sockets[$id++]=$s;
 	$http_message="GET /demonstration/delay?delay=" .$delay . " HTTP/1.0\r\nHost: phaseit.net\r\n\r\n"; 
 	fwrite($s,$http_message);
 	}else{
-	
+	echo "ff";
 	}
 $delay-=3;
 }
@@ -32,7 +33,8 @@ while(count($sockets)){
 	 if(count($read)){
 	 
 		foreach($read as $r){
-			      $id=array_search($r, $sockets); 
+			      $id=array_search($r, $sockets);
+			     // stream_set_timeout($r,1); 
 			      $data=fread($r,$convenient_read_block);
 			      if(strlen($data)==0){
 			       echo "Stream " . $id . " closes at " . date('h:i:s') . ".\n";
