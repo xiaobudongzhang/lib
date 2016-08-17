@@ -17,7 +17,7 @@ $error=curl_errno($c);
 curl_close($c);
 //print_r($page);
 die; */
-
+//file_get_contents($filename);
 //stream
  $stream=fopen($url, 'rb');
 stream_set_blocking($stream, TRUE);
