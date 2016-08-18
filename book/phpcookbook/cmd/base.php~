@@ -1,0 +1,2 @@
+<?php
+echo fgets(STDIN,1024);

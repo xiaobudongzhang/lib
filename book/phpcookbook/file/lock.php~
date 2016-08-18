@@ -1,0 +1,7 @@
+<?php
+$fh=fopen('lock.txt','a');
+flock($fh,LOCK_EX);
+fwrite($fh,'test');
+fflush($fh);
+fclock($fh,LOCK_UN);
+fclose($fh);
