@@ -8,18 +8,18 @@
 
 (setq my_name "badDog")
 
-(insert "hello!" "sb")
+(insert "hello!" "sb")hello!sb
 
 
-(insert "hello i am" my_name)
-;函数定义
+(insert "hello i am" my_name)hello i ambadDog
+;函数定义hello!sbhello i ambadDoghello i ambadDoghelloyou
 (defun hello()(insert "hello i am" my_name))
 
-(hello)
+(hello)hello i ambadDog
 
 (defun hello(name)(insert "hello" name))
 
-(hello "you" )
+(hello "you" )helloyou
 
 ;开启缓存新窗口
 (switch-to-buffer-other-window "*test*")
@@ -133,3 +133,12 @@
 )
 
 (bod-names)
+
+
+(defun func()
+  (interactive)
+  (message "hello sss")
+)
+
+(global-set-key (kbd "<f2>") 'bod-names)
+

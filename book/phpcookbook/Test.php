@@ -1,19 +1,17 @@
 <?php
 echo "afdafdasfd";
+var_dump('asfd');
+var_dump(mixed $expression);
+
+stream_set_timeout(resource $stream,int $seconds);
+
+function testme(){
 
 
+}
 
 
-
-
-
-
-
-
-
-
-
-
+testme();
 
 
 
