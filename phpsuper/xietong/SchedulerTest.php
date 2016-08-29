@@ -5,11 +5,16 @@ include  'Scheduler.php';
 
  function task1(){
 	for ($i=1;$i<=10;++$i){
-		//echo "This is task 1 iternation $i.\n";
+		echo "This is task 1 iternation $i.\n";
 		yield ;
 	}
 }
 
+/*  for ($i = 1; $i < 5; $i++) {
+	echo "This is   $i.\n";
+	//yield ;
+} 
+die; */
 function task2(){
 	for ($i = 1; $i < 5; $i++) {
 		echo "This is task 2 iteration $i.\n";
@@ -26,7 +31,7 @@ function task2(){
 	
 } */
 $scheduler=new Scheduler();
-//$scheduler->newTask(task1());
+$scheduler->newTask(task1());
 $scheduler->newTask(task2());
 
 $scheduler->run();

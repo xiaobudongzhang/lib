@@ -25,7 +25,7 @@ class Scheduler {
 				$retval ( $task, $this );
 				continue;
 			} */
-		 echo "task schedule id ".$task->getTaskId ()."\n";
+		// echo "task schedule id ".$task->getTaskId ()."\n";
 		//	 echo "finish status:".$task->isFinished()."\n"; */
 			if ($task->isFinished ()) {
 				unset ( $this->taskMap [$task->getTaskId ()] );
