@@ -23,4 +23,4 @@ foreach ($fmts as $locale=>$obj)
 	print $obj->format([1]);	
 	echo PHP_EOL;
 }
->>>>>>> ba9706672ae4246e32ea874be309e48288911881
+

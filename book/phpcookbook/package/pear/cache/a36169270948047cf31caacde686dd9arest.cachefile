@@ -1,0 +1,7 @@
+a:16:{s:7:"attribs";a:4:{s:5:"xmlns";s:37:"http://pear.php.net/dtd/rest.release2";s:9:"xmlns:xsi";s:41:"http://www.w3.org/2001/XMLSchema-instance";s:11:"xmlns:xlink";s:28:"http://www.w3.org/1999/xlink";s:18:"xsi:schemaLocation";s:83:"http://pear.php.net/dtd/rest.release2     http://pear.php.net/dtd/rest.release2.xsd";}s:1:"p";a:2:{s:7:"attribs";a:1:{s:10:"xlink:href";s:14:"/rest/p/openid";}s:8:"_content";s:6:"OpenID";}s:1:"c";s:12:"pear.php.net";s:1:"v";s:5:"0.4.0";s:1:"a";s:5:"0.4.0";s:2:"mp";s:5:"5.1.2";s:2:"st";s:5:"alpha";s:1:"l";s:15:"New BSD License";s:1:"m";s:7:"cweiske";s:1:"s";s:40:"PHP implementation of OpenID 1.1 and 2.0";s:1:"d";s:118:"OpenID is a free and easy way to use a single digital identity across the Internet. See http://openid.net for details.";s:2:"da";s:19:"2014-07-22 23:21:11";s:1:"n";s:467:"* Fix bug #19234: Normalization of identifiers/openID not implemented correctly
+* Fix bug #19235: Class docblock example in OpenID_RelyingParty does not work
+* Fix bug #19239: Exceptions indistinguishable (have no code)
+* Fix bug #19680: Warning: strpos(): Offset not contained in string
+* Fix bug #20329: Discover.php requires curl HTTP adapter
+* Fix bug #20331: Undefined offset: 1 in OpenID/Message.php
+* Implement request #18662: Unable to configure SSL settings.";s:1:"f";s:5:"94807";s:1:"g";s:36:"http://pear.php.net/get/OpenID-0.4.0";s:1:"x";a:1:{s:7:"attribs";a:1:{s:10:"xlink:href";s:17:"package.0.4.0.xml";}}}

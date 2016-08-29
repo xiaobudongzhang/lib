@@ -1,0 +1,27 @@
+a:16:{s:7:"attribs";a:4:{s:5:"xmlns";s:37:"http://pear.php.net/dtd/rest.release2";s:9:"xmlns:xsi";s:41:"http://www.w3.org/2001/XMLSchema-instance";s:11:"xmlns:xlink";s:28:"http://www.w3.org/1999/xlink";s:18:"xsi:schemaLocation";s:83:"http://pear.php.net/dtd/rest.release2     http://pear.php.net/dtd/rest.release2.xsd";}s:1:"p";a:2:{s:7:"attribs";a:1:{s:10:"xlink:href";s:22:"/rest/p/liveuser_admin";}s:8:"_content";s:14:"LiveUser_Admin";}s:1:"c";s:12:"pear.php.net";s:1:"v";s:5:"0.4.0";s:1:"a";s:5:"0.4.0";s:2:"mp";s:5:"4.2.0";s:2:"st";s:4:"beta";s:1:"l";s:4:"LGPL";s:1:"m";s:8:"doconnor";s:1:"s";s:55:"User authentication and permission management framework";s:1:"d";s:622:"LiveUser_Admin is meant to be used with the LiveUser package.
+  It is composed of all the classes necessary to administrate
+  data used by LiveUser.
+
+  You'll be able to add/edit/delete/get things like:
+  * Rights
+  * Users
+  * Groups
+  * Areas
+  * Applications
+  * Subgroups
+  * ImpliedRights
+
+  And all other entities within LiveUser.
+
+  At the moment we support the following storage containers:
+  * PEAR::DB
+  * PEAR::MDB
+  * PEAR::MDB2
+  * PECL::PDO
+
+  But it takes no time to write up your own storage container,
+  so if you like to use native mysql functions straight, then it's possible
+  to do so in under a hour!";s:2:"da";s:19:"2010-10-05 16:24:42";s:1:"n";s:168:"QA release
+Bug #13233  	Example1 error when importing data in DB
+Bug #11051  	Seems class variable is not declared
+Bug #8424  	incorrect handling of single column joins";s:1:"f";s:5:"68873";s:1:"g";s:44:"http://pear.php.net/get/LiveUser_Admin-0.4.0";s:1:"x";a:1:{s:7:"attribs";a:1:{s:10:"xlink:href";s:17:"package.0.4.0.xml";}}}

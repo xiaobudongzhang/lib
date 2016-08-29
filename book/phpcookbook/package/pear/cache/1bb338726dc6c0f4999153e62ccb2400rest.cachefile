@@ -1,0 +1,7 @@
+a:16:{s:7:"attribs";a:4:{s:5:"xmlns";s:37:"http://pear.php.net/dtd/rest.release2";s:9:"xmlns:xsi";s:41:"http://www.w3.org/2001/XMLSchema-instance";s:11:"xmlns:xlink";s:28:"http://www.w3.org/1999/xlink";s:18:"xsi:schemaLocation";s:83:"http://pear.php.net/dtd/rest.release2     http://pear.php.net/dtd/rest.release2.xsd";}s:1:"p";a:2:{s:7:"attribs";a:1:{s:10:"xlink:href";s:18:"/rest/p/auth_sasl2";}s:8:"_content";s:10:"Auth_SASL2";}s:1:"c";s:12:"pear.php.net";s:1:"v";s:5:"0.1.0";s:1:"a";s:5:"0.1.0";s:2:"mp";s:5:"5.0.0";s:2:"st";s:4:"beta";s:1:"l";s:3:"BSD";s:1:"m";s:8:"doconnor";s:1:"s";s:47:"Abstraction of various SASL mechanism responses";s:1:"d";s:152:"Provides code to generate responses to common SASL mechanisms, including:
+- Digest-MD5
+- Cram-MD5
+- Plain
+- Anonymous
+- Login (Pseudo mechanism)
+- SCRAM";s:2:"da";s:19:"2012-04-09 19:02:30";s:1:"n";s:52:"Fork from Auth_SASL to create PHP5+ friendly package";s:1:"f";s:4:"9269";s:1:"g";s:40:"http://pear.php.net/get/Auth_SASL2-0.1.0";s:1:"x";a:1:{s:7:"attribs";a:1:{s:10:"xlink:href";s:17:"package.0.1.0.xml";}}}
