@@ -43,15 +43,17 @@ var_dump($gen->send('ret1'));
 var_dump($gen->send('ret2'));
 */
 function gen(){
-	$ret =(yield 'yield1');
+	$obj=new stdClass();
+	$ret =(yield $obj);
 	
-	var_dump("gen1:".$ret);
+	var_dump("gen1:");
+	var_dump($ret);
 	$ret=(yield 'yield2');
 	
 	var_dump("gen2:".$ret);
 } 
 
 $gen=gen();
-var_dump("res_current:".$gen->current());
+var_dump($gen->current());
 var_dump("res_ret1:".$gen->send("ret1"));
 var_dump("res_ret2:".$gen->send("ret2"));

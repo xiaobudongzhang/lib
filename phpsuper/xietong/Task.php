@@ -8,18 +8,20 @@ class Task {
 	public function __construct($taskId, Generator $coroutine) {
 		$this->taskId = $taskId;
 		$this->coroutine = $coroutine;
-	}
-	public function getTaskId() {
-		return $this->taskId;
+        //  echo "task__\n";
+    }
+	public function getTaskId() {		
+        return $this->taskId;
+ 
 	}
 	public function setSendValue($sendValue) {
 		$this->sendValue = $sendValue;
 	}
 	public function run() {
-		echo "task id:".$this->getTaskId()."\n";
+        //	echo "task id:".$this->getTaskId()."\n";
 		if ($this->beforeFirstYield) {
 			$this->beforeFirstYield = false;
-			//echo "task first run\n";
+            //	echo "task first run\n";
 			return $this->coroutine->current ();
 		} else {
 			//echo "task send value $this->sendValue\n";
@@ -34,10 +36,3 @@ class Task {
 }
 
 
-/**
- * 		
- * return new SystemCall(function(Task $task,Scheduler $scheduler){
-				$task->setSendValue($task->getTaskId());
-				$scheduler->schedule($task);
-		});
- */
