@@ -13,7 +13,7 @@ class Scheduler {
 		$task = new Task ( $tid, $coroutine );
 		$this->taskMap [$tid] = $task;
 		$this->schedule ( $task );
-		return $tid;
+      	return $tid;
 	}
     public function killTask($tid){
         if(!isset($this->taskMap[$tid])){
@@ -35,15 +35,18 @@ class Scheduler {
 		$this->taskQueue->enqueue ( $task );
 	}
 	public function run() {
-		while ( ! $this->taskQueue->isEmpty () ) {
+      		while ( ! $this->taskQueue->isEmpty () ) { 
 			$task = $this->taskQueue->dequeue ();//因为已经dequeue所以失败后再次加入到队列中
+
+            echo "scheduler run:{$task->getTaskId()}\n";
 			$retval = $task->run ();
- 			if ($retval instanceof SystemCall) {
+ 			var_dump($retval);
+            if ($retval instanceof SystemCall) {
+                //echo "dddddd\n";
 				$retval ( $task, $this );
 				continue;
 			}
-	
-	
+            //echo "ddd3\n";
 			if ($task->isFinished ()) {
 				unset ( $this->taskMap [$task->getTaskId ()] );
 			} else {

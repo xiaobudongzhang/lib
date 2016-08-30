@@ -57,3 +57,4 @@ $gen=gen();
 var_dump($gen->current());
 var_dump("res_ret1:".$gen->send("ret1"));
 var_dump("res_ret2:".$gen->send("ret2"));
+var_dump($gen->current());

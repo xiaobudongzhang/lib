@@ -18,17 +18,18 @@ class Task {
 		$this->sendValue = $sendValue;
 	}
 	public function run() {
-        //	echo "task id:".$this->getTaskId()."\n";
+    	echo "task run  id:".$this->getTaskId()."\n";
 		if ($this->beforeFirstYield) {
 			$this->beforeFirstYield = false;
-            //	echo "task first run\n";
+            	echo "task first run\n";
 			return $this->coroutine->current ();
 		} else {
-			//echo "task send value $this->sendValue\n";
+            	echo "task send value $this->sendValue\n";
 			$retval = $this->coroutine->send ( $this->sendValue );
 			$this->sendValue = null;
 			return $retval;
 		}
+        
 	}
 	public function isFinished() {
 		return ! $this->coroutine->valid ();
