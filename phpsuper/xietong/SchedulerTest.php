@@ -5,18 +5,20 @@ include  'Scheduler.php';
 
 function  getTaskId(){
       return new SystemCall(function(Task $task,Scheduler $scheduler)    {
-      	echo "getTaskId:{$task->getTaskId()}\n";
-      	$task->setSendValue($task->getTaskId());
+echo "gettaskid id {$task->getTaskId()}\n";
+	            $task->setSendValue($task->getTaskId());
+
 				$scheduler->schedule($task);
 		});
 }
 
 function newTask(Generator $coroutine){
+echo "newTask\n";
      return new SystemCall(
          function(Task $task,Scheduler $scheduler) use($coroutine)         {
+echo "newtask call\n";
             $task->setSendValue($scheduler->newTask($coroutine));
             $scheduler->schedule($task);
-            echo "newTask:{$task->getTaskId()}\n";
          }
       );
 }
@@ -31,11 +33,11 @@ function killTask($tid){
 }
 
 function childTask(){
-	echo "childtask\n";
+echo "childtask\n";
   $tid=(yield getTaskId());
   while(true){
-    echo "Child task $tid still alive!\n";
-    sleep(2);
+  echo "Child task $tid still alive!\n";
+  sleep(3);
     yield;
  }
 }
@@ -45,22 +47,26 @@ function childTask(){
         }
 }
 
-function task(){
- $tid=(yield getTaskId());
-   $childTid=(yield newTask(childTask()));
+  
 
-    for ($i = 1; $i <= 6; ++$i) {
+function task(){
+   $tid=(yield getTaskId());
+ $childTid=(yield newTask(childTask()));
+
+/** for ($i = 1; $i <= 6; ++$i) {
         echo "parent task $tid iteration $i.\n";
 		yield ;
 
-
         if($i==3){
+
                  yield killTask($childTid);
          }
-	}
-}
+         }*/
+
+} 
+
 
   $scheduler=new Scheduler();
-  $scheduler->newTask(task());
-  $scheduler->run();
+ $scheduler->newTask(task());
+ $scheduler->run();
 
