@@ -8,6 +8,7 @@ class SystemCall {
 	 * 当对象作为函数调用时
 	 */
 	public function __invoke(Task $task, Scheduler $scheduler) {
+		
 		$callback = $this->callback;
  		return $callback ( $task, $scheduler );
 	}

@@ -1,5 +1,5 @@
 <?php
-//任务（一个任务就是用任务ID标记的一个协程(函数)）
+// 任务（一个任务就是用任务ID标记的一个协程(函数)）
 class Task {
 	protected $taskId;
 	protected $coroutine; // 协同生成器
@@ -8,23 +8,22 @@ class Task {
 	public function __construct($taskId, Generator $coroutine) {
 		$this->taskId = $taskId;
 		$this->coroutine = $coroutine;
-        //  echo "task__\n";
-    }
-	public function getTaskId() {		
-        return $this->taskId;
- 
+		// echo "task__\n";
+	}
+	public function getTaskId() {
+		return $this->taskId;
 	}
 	public function setSendValue($sendValue) {
 		$this->sendValue = $sendValue;
 	}
 	public function run() {
-        //	echo "task id:".$this->getTaskId()."\n";
+		// echo "task id:".$this->getTaskId()."\n";
 		if ($this->beforeFirstYield) {
 			$this->beforeFirstYield = false;
-            //	echo "task first run\n";
+			echo "task first run\n";
 			return $this->coroutine->current ();
 		} else {
-			//echo "task send value $this->sendValue\n";
+			echo "task send value $this->sendValue\n";
 			$retval = $this->coroutine->send ( $this->sendValue );
 			$this->sendValue = null;
 			return $retval;
