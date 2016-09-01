@@ -38,22 +38,28 @@ protected $waitingForWrite = [];
 		$this->taskQueue->enqueue ( $task );
 	}
 public function waitForRead($socket, Task $task) {
+
      echo "schedule waitForRead $socket\n";
+    
     if (isset($this->waitingForRead[(int) $socket])) {
         $this->waitingForRead[(int) $socket][1][] = $task;
     } else {
         echo "schedule waitforread else\n";
         $this->waitingForRead[(int) $socket] = [$socket, [$task]];
     }
+ var_dump($this->waitingForRead);
 }
  
 public function waitForWrite($socket, Task $task) {
  echo "schedule waitForWrite $socket\n";
+
     if (isset($this->waitingForWrite[(int) $socket])) {
         $this->waitingForWrite[(int) $socket][1][] = $task;
     } else {
         $this->waitingForWrite[(int) $socket] = [$socket, [$task]];
     }
+
+ var_dump($this->waitingForWrite);
 }
 
 protected function ioPoll($timeout) {
@@ -68,26 +74,42 @@ protected function ioPoll($timeout) {
     }
  
     $eSocks = []; // dummy
- 
+    echo "stream_select before\n"; 
+    var_dump($timeout);
+    if(!$rSocks&&!$wSocks){
+        echo "r and w empty\n";
+        return;
+    }
+    echo "rsocks\n";
+    var_dump($rSocks);
+    echo "wsocks\n";
+    var_dump($wSocks);
     if (!stream_select($rSocks, $wSocks, $eSocks, $timeout)) {
         echo "error stream_sock/n";
         var_dump($eSocks);
         return;
     }
- 
+    echo "stream_select after\n";
     foreach ($rSocks as $socket) {
+        echo "iopoll read socket:\n";
+        var_dump($socket);
+        
         list(, $tasks) = $this->waitingForRead[(int) $socket];
         unset($this->waitingForRead[(int) $socket]);
- 
+        var_dump($this->waitingForRead);
+        var_dump($tasks);
         foreach ($tasks as $task) {
             $this->schedule($task);
         }
     }
  
     foreach ($wSocks as $socket) {
+        echo "iopoll write socket:\n";
+        var_dump($socket);
         list(, $tasks) = $this->waitingForWrite[(int) $socket];
         unset($this->waitingForWrite[(int) $socket]);
- 
+        var_dump($this->waitingForWrite);
+        var_dump($tasks);
         foreach ($tasks as $task) {
             $this->schedule($task);
         }
@@ -99,6 +121,7 @@ protected function ioPoll($timeout) {
 protected function ioPollTask() {
     while (true) {
         if ($this->taskQueue->isEmpty()) {
+            echo "iopolltask taskqueue empty\n";
             $this->ioPoll(null);
         } else {
             $this->ioPoll(0);
@@ -123,10 +146,10 @@ protected function ioPollTask() {
 			}
             //echo "ddd3\n";
 			if ($task->isFinished ()) {
-                // echo "schedule finish";
+                 echo "schedule finish\n";
 				unset ( $this->taskMap [$task->getTaskId ()] );
 			} else {
-                // echo "schedule finsh else";
+                 echo "schedule finsh else\n";
 				$this->schedule ( $task );
 			}
 		}
