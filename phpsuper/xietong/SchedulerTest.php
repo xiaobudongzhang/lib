@@ -107,6 +107,7 @@ function server($port) {
     } */
     $socket=new CoSocket($socket);
     while(true){
+    	echo "server before newTask\n";
     	yield newTask(
     			handleClient(yield $socket->accept())
     			);
@@ -118,7 +119,7 @@ function handleClient($socket) {
 /* echo "hanleClinet $socket\n";
     yield waitForRead($socket); 
     $data = fread($socket, 8192);*/
- 
+	echo "hanleClinet $socket\n";
 	$data=(yield $socket->read(8192));
    $msg = "Received following request:\n\n$data\n";
     $msgLength = strlen($msg);
@@ -143,32 +144,7 @@ RES;
 }
 
 
-    function stackCoroutine(Generator $gen){
-        $stack=new SplStack;
-        for(;;){
-            $value=$gen->current();
-            if($value instanceof Generator){
-                $stack->push($gen);
-                $gen=$value;
-                continue;
-            }
 
-
-            $isReturnValue=$value instanceof CoroutineReturnValue;
-            
-            if(!$gen->valid()||$isReturnValue){
-                if($stack->isEmpty()){
-                    return;
-                }
-
-                $gen=$stack->pop();
-                $gen->send($isReturnValue?$value->getValue():null);
-                continue;
-            }
-
-            $gen->send(yield $gen->key()=>$value);
-        }
-    }
 
 function echoTimes($msg,$max){
     for($i=1;$i<$max;++$i){
@@ -186,8 +162,40 @@ function taskTest(){
     echoTimes('bar',5);
     yield;
 }
+
+function stackedCoroutine(Generator $gen) {
+	$stack = new SplStack;
+echo "stack------\n";
+	for (;;) {
+		$value = $gen->current();
+		
+		echo "stacked current:\n";
+		var_dump($value);
+		if ($value instanceof Generator) {
+			echo "stacked is generator\n";
+			$stack->push($gen);
+			$gen = $value;
+			continue;
+		}
+
+		$isReturnValue = $value instanceof CoroutineReturnValue;
+		if (!$gen->valid() || $isReturnValue) {
+			if ($stack->isEmpty()) {
+				return;
+			}
+           echo "stacked pop\n";
+			$gen = $stack->pop();
+			var_dump($gen);
+			$gen->send($isReturnValue ? $value->getValue() : NULL);
+			continue;
+		}
+
+		$gen->send(yield $gen->key() => $value);
+	    echo "stacked for end\n";
+	}
+}
   $scheduler=new Scheduler();
 //$scheduler->newTask(taskTest());
-$scheduler->newTask(server(8002));
+$scheduler->newTask(server(8008));
 $scheduler->run();
 //server(8002);

@@ -8,7 +8,7 @@ class Task {
 	public function __construct($taskId, Generator $coroutine) {
 		$this->taskId = $taskId;
 		$this->coroutine = stackedCoroutine($coroutine);
-		// echo "task__\n";
+		echo "task  __construct\n";
 	}
 	public function getTaskId() {
 		return $this->taskId;
@@ -32,6 +32,8 @@ class Task {
 	public function isFinished() {
 		return ! $this->coroutine->valid ();
 	}
+	
+
 }
 
 

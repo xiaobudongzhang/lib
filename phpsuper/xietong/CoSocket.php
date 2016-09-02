@@ -7,21 +7,25 @@ class CoSocket{
 	}
 	
 	public function accept(){
+		echo "cosocket accept\n";
 		yield  waitForRead($this->socket);
 		yield  retval(new CoSocket(stream_socket_accept($this->socket,0)));
 	}
 	
 	public function read($size){
+		echo "cosocket read\n";
 		yield waitForRead($this->socket);
 		yield retval(fread($this->socket,$size));
 	}
 	
 	public function write($string){
+		echo "cosocket write\n";
 		yield waitForWrite($this->socket);
 		fwrite($this->socket, $string);
 	}
 	
 	public function close(){
+		echo "cosocket close\n";
 		fclose($this->socket);
 	}
 }

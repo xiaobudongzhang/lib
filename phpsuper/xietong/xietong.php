@@ -42,7 +42,7 @@ var_dump($gen->current());
 var_dump($gen->send('ret1'));
 var_dump($gen->send('ret2'));
 */
-function gen(){
+/* function gen(){
 	$obj=new stdClass();
 	$ret =(yield $obj);
 	
@@ -57,4 +57,8 @@ $gen=gen();
 var_dump($gen->current());
 var_dump("res_ret1:".$gen->send("ret1"));
 var_dump("res_ret2:".$gen->send("ret2"));
-var_dump($gen->current());
+var_dump($gen->current()); */
+
+for(;;){
+echo "111\n";	//dfdssdfs
+}
