@@ -131,7 +131,7 @@ protected function ioPollTask() {
 }
 
 	public function run() {
-        $this->newTask($this->ioPollTask());
+        //   $this->newTask($this->ioPollTask());
       		while ( ! $this->taskQueue->isEmpty () ) { 
 			$task = $this->taskQueue->dequeue ();//因为已经dequeue所以失败后再次加入到队列中
 

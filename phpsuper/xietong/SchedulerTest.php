@@ -2,7 +2,12 @@
 include 'SystemCall.php';
 include "Task.php";
 include  'Scheduler.php';
+include 'CoroutineReturnValue.php';
 
+
+function retval(){
+    return new CoroutineReturnValue($value);
+}
 function  getTaskId(){
       return new SystemCall(function(Task $task,Scheduler $scheduler)    {
 echo "gettaskid id {$task->getTaskId()}\n";
@@ -126,8 +131,50 @@ RES;
 
     fclose($socket);
 }
+
+
+    function stackCoroutine(Generator $gen){
+        $stack=new SplStack;
+        for(;;){
+            $value=$gen->current();
+            if($value instanceof Generator){
+                $stack->push($gen);
+                $gen=$value;
+                continue;
+            }
+
+
+            $isReturnValue=$value instanceof CoroutineReturnValue;
+            
+            if(!$gen->valid()||$isReturnValue){
+                if($stack->isEmpty()){
+                    return;
+                }
+
+                $gen=$stack->pop();
+                $gen->send($isReturnValue?$value->getValue():null);
+                continue;
+            }
+
+            $gen->send(yield $gen->key()=>$value);
+        }
+    }
+
+function echoTimes($msg,$max){
+    for($i=1;$i<$max;++$i){
+        echo "$msg iteration $i\n";
+        yield;
+    }
+
+}
+function taskTest(){
+    echoTimes('foo',10);
+    echo "----\n";
+    echoTimes('bar',5);
+    yield;
+}
   $scheduler=new Scheduler();
-//$scheduler->newTask(task());
- $scheduler->newTask(server(8002));
- $scheduler->run();
-server(8002);
+$scheduler->newTask(taskTest());
+//$scheduler->newTask(server(8002));
+$scheduler->run();
+//server(8002);

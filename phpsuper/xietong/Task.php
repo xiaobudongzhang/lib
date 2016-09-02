@@ -34,6 +34,8 @@ class Task {
 	public function isFinished() {
 		return ! $this->coroutine->valid ();
 	}
+    
+
 }
 
 
