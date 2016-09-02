@@ -3,7 +3,7 @@ include 'SystemCall.php';
 include "Task.php";
 include  'Scheduler.php';
 include 'CoroutineReturnValue.php';
-
+include 'CoSocket.php';
 
 function retval(){
     return new CoroutineReturnValue($value);
@@ -98,21 +98,28 @@ function server($port) {
  
     stream_set_blocking($socket, 0);
  
-    while (true) {
+/*     while (true) {
         echo "server wait for read\n";
         var_dump($socket);
         yield waitForRead($socket);
         $clientSocket = stream_socket_accept($socket, 0);
         yield newTask(handleClient($clientSocket));
+    } */
+    $socket=new CoSocket($socket);
+    while(true){
+    	yield newTask(
+    			handleClient(yield $socket->accept())
+    			);
     }
 }
 
 
 function handleClient($socket) {
-echo "hanleClinet $socket\n";
-    yield waitForRead($socket);
-    $data = fread($socket, 8192);
+/* echo "hanleClinet $socket\n";
+    yield waitForRead($socket); 
+    $data = fread($socket, 8192);*/
  
+	$data=(yield $socket->read(8192));
    $msg = "Received following request:\n\n$data\n";
     $msgLength = strlen($msg);
  
@@ -124,12 +131,15 @@ Connection: close\r
 \r
 $msg
 RES;
-    echo "client before write\n";
+/*     echo "client before write\n";
     yield waitForWrite($socket);
     fwrite($socket, $response);
     echo "client after write\n";
 
-    fclose($socket);
+    fclose($socket); */
+    
+    yield $socket->write($response);
+    yield $socket->close();
 }
 
 
@@ -168,13 +178,16 @@ function echoTimes($msg,$max){
 
 }
 function taskTest(){
-    echoTimes('foo',10);
+    $x=echoTimes('foo',10);
+    $x->send("dd");
+    $x->send("dd");
+    $x->send("dd");
     echo "----\n";
     echoTimes('bar',5);
     yield;
 }
   $scheduler=new Scheduler();
-$scheduler->newTask(taskTest());
-//$scheduler->newTask(server(8002));
+//$scheduler->newTask(taskTest());
+$scheduler->newTask(server(8002));
 $scheduler->run();
 //server(8002);
