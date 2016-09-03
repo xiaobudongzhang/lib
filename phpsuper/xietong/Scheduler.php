@@ -84,6 +84,7 @@ protected function ioPoll($timeout) {
     var_dump($rSocks);
     echo "wsocks\n";
     var_dump($wSocks);
+
     if (!stream_select($rSocks, $wSocks, $eSocks, $timeout)) {
         echo "error stream_sock/n";
         var_dump($eSocks);

@@ -178,5 +178,7 @@ echo "try to kill task failed",$e->getMessage(),"\n";
   $scheduler=new Scheduler();
 //$scheduler->newTask(taskTest());
 $scheduler->newTask(server(8010));
+$scheduler->newTask(server(8011));
+$scheduler->newTask(server(8012));
 $scheduler->run();
 //server(8002);
