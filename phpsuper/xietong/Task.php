@@ -5,10 +5,11 @@ class Task {
 	protected $coroutine; // 协同生成器
 	protected $sendValue = null;
 	protected $beforeFirstYield = true;
+    protected $exception =null;
 	public function __construct($taskId, Generator $coroutine) {
 		$this->taskId = $taskId;
 		$this->coroutine = stackedCoroutine($coroutine);
-		echo "task  __construct\n";
+       	echo "task  __construct\n";
 	}
 	public function getTaskId() {
 		return $this->taskId;
@@ -22,7 +23,11 @@ class Task {
 			$this->beforeFirstYield = false;
 			echo "task first run\n";
 			return $this->coroutine->current ();
-		} else {
+		} elseif($this->exception){
+            $retval=$this->coroutine->throw($this->exception);
+            $this->exception=null;
+            return $retval;
+        }else {
 			echo "task send value $this->sendValue\n";
 			$retval = $this->coroutine->send ( $this->sendValue );
 			$this->sendValue = null;
@@ -32,7 +37,11 @@ class Task {
 	public function isFinished() {
 		return ! $this->coroutine->valid ();
 	}
-	
+	public function setException($exception){
+        $this->exception=$exception;
+    }
+
+
 
 }
 

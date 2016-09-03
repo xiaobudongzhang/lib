@@ -1,11 +1,11 @@
 <?php
+include "function.php";
 include 'SystemCall.php';
 include "Task.php";
 include  'Scheduler.php';
 include 'CoroutineReturnValue.php';
 include 'CoSocket.php';
-
-function retval(){
+function retval($value){
     return new CoroutineReturnValue($value);
 }
 function  getTaskId(){
@@ -31,8 +31,12 @@ echo "newtask call\n";
 function killTask($tid){
         return new SystemCall(
               function (Task $task,Scheduler $scheduler) use($tid)              {
-                $task->setSendValue($scheduler->killTask($tid));
+if($scheduler->killTask($tid)){
+//  $task->setSendValue($scheduler->killTask($tid));
                 $scheduler->schedule($task);
+}else{
+throw new InvalidArgumentException("Invid task id!");
+}
               }
         );
 }
@@ -119,7 +123,8 @@ function handleClient($socket) {
 /* echo "hanleClinet $socket\n";
     yield waitForRead($socket); 
     $data = fread($socket, 8192);*/
-	echo "hanleClinet $socket\n";
+	echo "hanleClinet socket value\n";
+    var_dump($socket);
 	$data=(yield $socket->read(8192));
    $msg = "Received following request:\n\n$data\n";
     $msgLength = strlen($msg);
@@ -162,40 +167,16 @@ function taskTest(){
     echoTimes('bar',5);
     yield;
 }
-
-function stackedCoroutine(Generator $gen) {
-	$stack = new SplStack;
-echo "stack------\n";
-	for (;;) {
-		$value = $gen->current();
-		
-		echo "stacked current:\n";
-		var_dump($value);
-		if ($value instanceof Generator) {
-			echo "stacked is generator\n";
-			$stack->push($gen);
-			$gen = $value;
-			continue;
-		}
-
-		$isReturnValue = $value instanceof CoroutineReturnValue;
-		if (!$gen->valid() || $isReturnValue) {
-			if ($stack->isEmpty()) {
-				return;
-			}
-           echo "stacked pop\n";
-			$gen = $stack->pop();
-			var_dump($gen);
-			$gen->send($isReturnValue ? $value->getValue() : NULL);
-			continue;
-		}
-
-		$gen->send(yield $gen->key() => $value);
-	    echo "stacked for end\n";
-	}
+    function taskerror(){
+try{
+yield killTask(500);
+}catch(Exception $e){
+echo "try to kill task failed",$e->getMessage(),"\n";
 }
+}
+
   $scheduler=new Scheduler();
 //$scheduler->newTask(taskTest());
-$scheduler->newTask(server(8008));
+$scheduler->newTask(server(8010));
 $scheduler->run();
 //server(8002);

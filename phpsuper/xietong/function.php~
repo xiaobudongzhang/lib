@@ -1,0 +1,33 @@
+<?php 
+function stackedCoroutine(Generator $gen) {
+    yield "stack";
+	$stack = new SplStack;
+echo "stack------\n";
+	for (;;) {
+		$value = $gen->current();
+		
+		echo "stacked current:\n";
+		var_dump($value);
+		if ($value instanceof Generator) {
+			echo "stacked is generator\n";
+			$stack->push($gen);
+			$gen = $value;
+			continue;
+		}
+
+		$isReturnValue = $value instanceof CoroutineReturnValue;
+		if (!$gen->valid() || $isReturnValue) {
+			if ($stack->isEmpty()) {
+				return;
+			}
+           echo "stacked pop\n";
+			$gen = $stack->pop();
+			var_dump($gen);
+			$gen->send($isReturnValue ? $value->getValue() : NULL);
+			continue;
+		}
+
+		$gen->send(yield $gen->key() => $value);
+	    echo "stacked for end\n";
+	}
+}

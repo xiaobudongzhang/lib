@@ -1,0 +1,66 @@
+task  __construct
+task  __construct
+2016-09-03 18:04:46   ---scheduler run:1
+task run  id:1
+task first run
+stack------
+i:::1
+stacked current  value:
+object(SystemCall)#10 (1) {
+  ["callback":protected]=>
+  object(Closure)#11 (2) {
+    ["static"]=>
+    array(1) {
+      ["tid"]=>
+      int(500)
+    }
+    ["parameter"]=>
+    array(2) {
+      ["$task"]=>
+      string(10) "<required>"
+      ["$scheduler"]=>
+      string(10) "<required>"
+    }
+  }
+}
+stacked before end
+schedule task run val:object(SystemCall)#10 (1) {
+  ["callback":protected]=>
+  object(Closure)#11 (2) {
+    ["static"]=>
+    array(1) {
+      ["tid"]=>
+      int(500)
+    }
+    ["parameter"]=>
+    array(2) {
+      ["$task"]=>
+      string(10) "<required>"
+      ["$scheduler"]=>
+      string(10) "<required>"
+    }
+  }
+}
+2016-09-03 18:04:46   ---scheduler run:2
+task run  id:2
+task first run
+stack------
+i:::1
+stream_select before
+int(0)
+r and w empty
+stacked current  value:
+NULL
+stacked before end
+schedule task run val:NULL
+schedule finsh else
+2016-09-03 18:04:46   ---scheduler run:1
+task run  id:1
+
+Fatal error: Uncaught exception 'InvalidArgumentException' with message 'Invid task id!' in /home/xiaoxiaojie/lib/lib/phpsuper/xietong/SchedulerTest.php:38
+Stack trace:
+#0 /home/xiaoxiaojie/lib/lib/phpsuper/xietong/SystemCall.php(13): {closure}(Object(Task), Object(Scheduler))
+#1 /home/xiaoxiaojie/lib/lib/phpsuper/xietong/Scheduler.php(145): SystemCall->__invoke(Object(Task), Object(Scheduler))
+#2 /home/xiaoxiaojie/lib/lib/phpsuper/xietong/SchedulerTest.php(181): Scheduler->run()
+#3 {main}
+  thrown in /home/xiaoxiaojie/lib/lib/phpsuper/xietong/SchedulerTest.php on line 38

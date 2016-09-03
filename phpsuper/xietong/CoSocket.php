@@ -9,7 +9,9 @@ class CoSocket{
 	public function accept(){
 		echo "cosocket accept\n";
 		yield  waitForRead($this->socket);
+		echo "cosocket accept waitforead after\n";
 		yield  retval(new CoSocket(stream_socket_accept($this->socket,0)));
+		echo "cosocket accept retval after";
 	}
 	
 	public function read($size){

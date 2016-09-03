@@ -131,17 +131,22 @@ protected function ioPollTask() {
 }
 
 	public function run() {
-        //   $this->newTask($this->ioPollTask());
+           $this->newTask($this->ioPollTask());
       		while ( ! $this->taskQueue->isEmpty () ) { 
 			$task = $this->taskQueue->dequeue ();//因为已经dequeue所以失败后再次加入到队列中
 
             echo date('Y-m-d H:i:s',time())."   ---scheduler run:{$task->getTaskId()}\n";
 			$retval = $task->run ();
- 			var_dump($retval);
+            echo "schedule task run val:";
+            var_dump($retval);
             if ($retval instanceof SystemCall) {
                 // echo "dddddd\n";
+                try{
 				$retval ( $task, $this );
-                
+                }catch(Exception $e){
+                    $task->setException($e);
+                    $this->schedule($task);
+                }
 				continue;
 			}
             //echo "ddd3\n";
