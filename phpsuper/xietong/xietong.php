@@ -42,19 +42,28 @@ var_dump($gen->current());
 var_dump($gen->send('ret1'));
 var_dump($gen->send('ret2'));
 */
-function gen(){
+ function gen(){
+	$i=0;
+	while(1){
+	$i++;
+	echo "i:$i\n";
 	$obj=new stdClass();
-	$ret =(yield $obj);
+	$ret =(yield 'obj'.$i);
 	
 	var_dump("gen1:");
 	var_dump($ret);
-	$ret=(yield 'yield2');
+	}
+//	$ret=(yield 'yield2');
 	
-	var_dump("gen2:".$ret);
+//	var_dump("gen2:".$ret);
 } 
 
 $gen=gen();
-var_dump($gen->current());
+//var_dump($gen->current());
 var_dump("res_ret1:".$gen->send("ret1"));
-var_dump("res_ret2:".$gen->send("ret2"));
-var_dump($gen->current());
+//var_dump("res_ret2:".$gen->send("ret2"));
+//var_dump($gen->current()); 
+
+//for(;;){
+//echo "111\n";	//dfdssdfs
+//}
