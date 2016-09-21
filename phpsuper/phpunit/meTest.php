@@ -23,7 +23,8 @@ class meTest extends \PHPUnit_Extensions_Selenium2TestCase {
         ->expiry(time()+60*60*24)
         ->secure(FALSE) 
         ->set(); 
-
-        $this->assertEquals('value', 'value');
+        file_get_contents("{$this->base_url}/index.html");
+		 file_put_contents('E:/libcookie', json_encode($_COOKIE).PHP_EOL,FILE_APPEND);
+        $this->assertEquals('value', $cookies->get('name222111'));
 	}
 }

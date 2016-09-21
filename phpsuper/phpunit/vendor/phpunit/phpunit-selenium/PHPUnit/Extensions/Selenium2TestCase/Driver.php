@@ -107,6 +107,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Driver
                      ));
 
         if ($http_method === 'POST') {
+        file_put_contents('E:/realpost', "####url#####".$url->getValue()."###param###".json_encode($params)."######".PHP_EOL,FILE_APPEND);
             curl_setopt($curl, CURLOPT_POST, TRUE);
             if ($params && is_array($params)) {
                 curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($params));
