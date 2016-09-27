@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>demo</title>
+    <script>
+    function showCoords(evt) {
+        //定位
+        console.log(
+            "clientX value: " + evt.clientX + "\n" +
+            "clientY value: " + evt.clientY + "\n"
+        );
+        //弹窗
+         window.open(
+    "http://127.0.0.1:8899/info.php",
+    "DescriptiveWindowName",
+    "resizable,scrollbars,status"
+  );
+        //修改
+    }
+    </script>
+</head>
+
+<body >
+    <div>
+        <img src="tt.png" onmousedown="showCoords(event)">
+    </div>
+</body>
+
+</html>
