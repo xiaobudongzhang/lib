@@ -15,3 +15,9 @@ void set_f1(int fd,int flags){
 		err_sys("fcntl set error");
 	}
 }
+
+
+void main(void){
+	set_f1(STDOUT_FILENO,O_SYNC);
+}
+
