@@ -2,7 +2,7 @@
 #include "../error.c"
 #include <errno.h>
 #include <linux/limits.h>
-
+//分配文件内存  简单的分配最大值内存
 #ifdef PATH_MAX
 static int pathmax= PATH_MAX;
 #else 
@@ -47,13 +47,13 @@ char * path_alloc(int *sizep){
   if(sizep != NULL)
     sizep=&size;
   printf("ptr=%p\n",&ptr);
-  printf("ptr=%d\n",ptr);
+  printf("ptr=%s\n",ptr);
   return(ptr);
 
 }
 
 
-void main(void){
+  void main(void){
   int *psize;
 
   scanf("%d",&psize);
@@ -62,6 +62,7 @@ void main(void){
   path_alloc(psize);
   exit(0);
 }
+
 
 
 
