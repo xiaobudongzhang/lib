@@ -1,0 +1,8 @@
+#include "../apue.h"
+#include "../error.c"
+//getc putc 实现输入输出
+int main(void){
+  
+  int c;
+  
+}

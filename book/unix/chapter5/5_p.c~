@@ -1,0 +1,6 @@
+#include "../apue.h"
+
+int main(void){
+  printf("%d\n",11);
+  exit(0);
+}
