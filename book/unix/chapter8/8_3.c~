@@ -1,0 +1,19 @@
+#include "apue.h"
+#include "../error.c"
+#include <sys/wait.h>
+
+void pr_eixt(int status){
+  if(WIFEXITED(status))
+    printf("exit,status=%d\n",WEXITSTATUS(status));
+
+  else if(WIFSIGNALED(status))
+    printf("abort,sig number=%d%s\n",WTERMSIG(status),
+#ifdef WCOREDUMP
+	   WCOREDUMP(status)?"core file":"")
+#else
+      "");
+#endif
+ else if(WIFSTOPPED(status))
+   printf("child stop,sig number=%d\n",WSTOPSIG(status));
+
+}

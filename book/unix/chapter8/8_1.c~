@@ -1,0 +1,20 @@
+#include "../apue.h"
+#include "../error.c"
+//fork 变量父子进程
+int glob=9;
+char buf[]="a write to stdout\n";
+
+int main(void){
+  int var;
+  pid_t pid;
+  
+  var =88;
+  if(write(STDOUT_FILENO,buf,sizeof(buf)-1)!=sizeof(buf)-1)
+    err_sys("write err");
+
+  printf("before fork\n");//not flush stdout
+  
+  if(()
+  
+  }
+}
