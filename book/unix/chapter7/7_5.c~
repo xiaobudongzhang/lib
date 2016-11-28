@@ -1,0 +1,27 @@
+#include "../apue.h"
+#include "../error.c"
+#include <setjmp.h>
+
+jmp_buf jmpbuffer;
+void do_line(char *);
+int main(void){
+  char line[MAXLINE];
+  
+  if(setjmp(jmpbuffer)!=0)
+    printf("ereeee");
+  while(fgets(line,MAXLINE,stdin)!=NULL){
+    do_line(line);
+  }
+}
+
+void do_line(char *line){
+  
+  if(line=='q'){
+    longjmp(uffer,1);
+  }else{
+    printf("%s\n",line);
+  }
+
+
+
+}

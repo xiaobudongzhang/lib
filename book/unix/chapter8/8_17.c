@@ -20,7 +20,7 @@ static unsigned long compt2ulong(comp_t comptime){
   unsigned long val;
   int           exp;
 
-  val=comptime & 0x1fff;
+  val=comptime & 017777;
   exp=(comptime>>13)&7;
   
   while(exp-->0)

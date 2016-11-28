@@ -1,0 +1,5 @@
+enter
+stream =stdin ,full buffer,buffer size =4096 
+stream =stdout ,full buffer,buffer size =4096 
+stream =stderr ,unbuffered,buffer size =1 
+stream =/etc/virc ,full buffer,buffer size =4096 
