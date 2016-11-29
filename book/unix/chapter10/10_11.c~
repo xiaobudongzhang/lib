@@ -1,0 +1,20 @@
+#include "../apue.h"
+#include "../error.c"
+
+static void sig_quit(int);
+
+int main(void){
+
+  sigset_t newmask,oldmask,pendmask;
+  
+  if(signal(SIGQUIT,sig_quit)==SIG_ERR)
+    err_sys("cant catch qigquit");
+  
+  sigemptyset(&newmask);
+  sigaddset(&newmask,SIGQUIT);
+
+  if(sigprocmask(SIG_BLOCK,&newmask,&oldmask)<0)
+    err_sys("sig_block err");
+
+  sleep(5);
+}

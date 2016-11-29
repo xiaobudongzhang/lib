@@ -1,0 +1,4 @@
+#include "../pue.h"
+#include "../error.c"
+//信号屏蔽字与sigsetjmp siglongjmp
+static void sig_usr1(int),sig_alrm(in

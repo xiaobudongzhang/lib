@@ -1,0 +1,25 @@
+#include "../apue.h"
+#include "../error.c"
+#include "../lib/signal3.c"
+#include "../lib/system4.c"
+//test system sig
+static void sig_int(int signo){
+  printf("caught SIGINT\n");
+}
+
+static void sig_chld(int signo){
+  printf("caught SIGCHLD\n");
+}+
+
+int main(void){
+
+  if(signal3(SIGINT,sig_int)==SIG_ERR)
+    err_sys("sig sigint err");
+  if(signal3(SIGCHLD,sig_chld)==SIG_ERR)
+    err_sys("sig sigchld err");
+  
+  if(system4("/bin/ed -p '>>'")<0)
+    err_sys("system() err");
+  printf("last\n");
+  exit(0);
+}

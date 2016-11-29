@@ -1,0 +1,12 @@
+#include "../apue.h"
+#include "../error.c"
+#include "10_10.c"
+//测试信号屏蔽字打印
+int main(void){
+
+  
+  sleep(10);
+  signal(SIGINT,si);
+  
+  return (0);
+}
