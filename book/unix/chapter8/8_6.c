@@ -14,6 +14,7 @@ int main(void){
   }else if(pid==0){
     chartime("output from child\n");
   }else{
+	sleep(5);
     chartime("output from parent\n");
   }
   exit(0);
