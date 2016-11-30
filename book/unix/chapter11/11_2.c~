@@ -1,0 +1,38 @@
+#include "../apue.h"
+#include "../error.c"
+#include <thread.h>
+//获取线程退出状态
+
+void *thr_fn1(void *arg){
+
+  printf("thread 1 returning\n");
+  return ((void*)1);
+}
+
+void *thr_fn2(void *arg){
+  
+  printf("thread 2 exiting\n");
+  pthread_exit((void*)2);
+}
+
+int main(void){
+
+  int err;
+  pthread tid1,tid2;
+  void *tret;
+  
+  err=pthread_create(&tid1,NULL,thr_fn1,NULL);
+  if(err!=0)
+    err_quit("cant create thread 1:%s\n",strerror(err));
+  err=pthread_create(&tid2,NULL,thr_fn2,NULL);
+  if(err!=0)
+    err_quit("cant create thread 2:%s\n",strerror(err));
+  
+  err=pthread_join(tid1,&tret);
+  if(err!=0)
+    err_quit("cant join with thread 1:%s\n",strerror(err));
+  err=pthread_join(tid1,&tret);
+  if(err!=0)
+    err_quit("cant join with thread 1:%s\n",strerror(err));
+
+}
