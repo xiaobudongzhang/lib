@@ -21,7 +21,7 @@ unsigned int sleep3(unsigned int nsecs){
   sigprocmask(SIG_BLOCK,&newmask,&oldmask);
 
 
-  alarm(nsecs);
+    alarm(nsecs);
 
   suspmask=oldmask;
   sigdelset(&suspmask,SIGALRM);
