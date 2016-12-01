@@ -1,0 +1,34 @@
+#include "../apue.h"
+#include <pthread.h>
+#include "../error.c"
+
+int quitflag;
+sigset_t mask;
+
+pthread_mutex_t lock=PTHREAD_MUTEX_INITIALIZER;
+pthread_cond_t wait=PTHREAD_COND_INITIALIZER;
+
+void thr_fn(void *arg){
+  int err,signo;
+  
+  for(;;){
+    err=sigwait(&mask,&signo);
+    if(err!=0)
+      err_exit(err,"sigwait failed");
+    switch(signo){
+    case SIGINT:
+      printf("\ninter\n");
+      break;
+    case SIGQUIT:
+      pthread_mutex_lock(&lock);
+      quitflag=1;
+      pthread_mutex_unlock(&lock);
+      pthread_cond_signal(&wait);
+      return(0);
+    default:
+      printf("unexcepected%d\n",signo);
+      exit(1);
+    }
+  }
+
+}
