@@ -24,24 +24,24 @@ lock_reg(int fd, int cmd, int type, off_t offset, int whence, off_t len)
 
 
 static void sig_usr(int signo){
-  printf("sig_usr\n");
+  printf("in sig_usr pid=%d\n",getpid());
   sigflag=1;
   return;
 }
 
 static void lockabyte(const char *name,int fd,off_t offset){
   printf("in lockabyte\n");
-  if(read_lock(fd,offset,SEEK_SET,1)<0)
+  if(writew_lock(fd,offset,SEEK_SET,1)<0)
     err_sys("%s:writew_lock err",name);
   
   printf("%s:got the lock,byte %ld\n",name,offset);
 }
 
 void TELL_WAIT(void){
-  
-  if(signal3(SIGUSR1,sig_usr)==SIG_ERR)
+  printf("in tell_wait\n");
+  if(signal(SIGUSR1,sig_usr)==SIG_ERR)
     err_sys("sig usr1 err");
-  if(signal3(SIGUSR2,sig_usr)==SIG_ERR)
+  if(signal(SIGUSR2,sig_usr)==SIG_ERR)
     err_sys("sig usr2 err");
   sigemptyset(&zeromask);
   sigemptyset(&newmask);
@@ -55,23 +55,27 @@ void TELL_WAIT(void){
 }
 
 void TELL_PARENT(pid_t pid){
+  printf("in tell_parent\n");
   kill(pid,SIGUSR2);
 }
 
 void WAIT_PARENT(void){
+  printf("in wait_parent\n");
   while(sigflag==0)
        sigsuspend(&zeromask);
   sigflag=0;
-  printf("wait pp\n");
+  //printf("wait pp\n");
   if(sigprocmask(SIG_SETMASK,&oldmask,NULL)<0)
     err_sys("sig_setmask err");
 }
 
 void TELL_CHILD(pid_t pid){
+  printf("in tell_child\n");
   kill(pid,SIGUSR1);
 }
 
 void WAIT_CHILD(void){
+  printf("in wait_child\n");
   while(sigflag==0)
     sigsuspend(&zeromask);
   sigflag=0;
@@ -110,35 +114,42 @@ Sigfunc *signal3(int signo,Sigfunc *func){
 int main(void){
   int fd;
   pid_t pid;
-
+  
+  //static volatile sig_atomic_t sigflagb;
+  //int b=0;
+  //if(b===0)
+  //printf("%d,%d\n",sigflagb,b);exit(0);
+  
   if((fd=open("templock",O_RDWR|O_CREAT|O_TRUNC))<0)
     err_sys("create err");
 
   if(write(fd,"abcdef",6)!=6)
     err_sys("write err");
 
-  //TELL_WAIT();
+  TELL_WAIT();
 
   if((pid=fork())<0){
     err_sys("fork err");
   }else if(pid==0){
-    printf("child pid\n");
+    printf("child begin pid=%d\n",getpid());
     lockabyte("child",fd,0);
+    //lockabyte("child",fd,0);
+    //sleep(5);
     //WAIT_PARENT();
-    //TELL_PARENT(getpid());
-    //WAIT_PARENT();
-    //lockabyte("child",fd,1);
-    printf("child err\n");
+    TELL_PARENT(getppid());
+    WAIT_PARENT();
+    lockabyte("child",fd,1);
+    printf("child end\n");
     //chartime("output from child\n");
   }else{
-    printf("parent pid\n");
+    printf("parent begin\n");
     //sleep(5);
     //chartime("output from parent\n");
-    lockabyte("parent",fd,2);
-    // TELL_CHILD(pid);
-    //   WAIT_CHILD();
-    //lockabyte("child",fd,0);
-    printf("parent err\n");
+    lockabyte("parent",fd,1);
+     TELL_CHILD(pid);
+     WAIT_CHILD();
+     lockabyte("parent",fd,0);
+    printf("parent end\n");
   }
   exit(0);
 }
