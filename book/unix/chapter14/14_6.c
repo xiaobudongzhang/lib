@@ -145,7 +145,7 @@ int main(int argc,char *argv[]){
     err_sys("fstat error");
   //设置记录锁
   if(fchmod(fd,(statbuf.st_mode&~S_IXGRP)|S_ISGID)<0)
-    err_sys("fchmod err");
+   err_sys("fchmod err");
   TELL_WAIT();
 
   if((pid=fork())<0){
@@ -153,7 +153,7 @@ int main(int argc,char *argv[]){
   }else if(pid==0){
     printf("child begin pid=%d\n",getpid());
     WAIT_PARENT();
-    //set_f1(fd,O_NONBLOCK);
+    set_f1(fd,O_NONBLOCK);
     if(read_lock(fd,0,SEEK_SET,0)!=-1)
       err_sys("child:read lock suss");
     printf("read_lock locked,err:%d\n",errno);
@@ -171,7 +171,7 @@ int main(int argc,char *argv[]){
     //TELL_PARENT(getpid());
     printf("child end\n");
   }else{
-    sleep(5);
+    //  sleep(5);
     printf("parent begin\n");
     if(write_lock(fd,0,SEEK_SET,0)<0)
       err_sys("write_lock err");
