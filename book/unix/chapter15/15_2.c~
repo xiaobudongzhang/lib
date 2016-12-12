@@ -1,0 +1,8 @@
+#include "../apue.h"
+#include <sys/wait.h>
+
+#define DEF_PAGER "/bin/more"
+
+int main(int argc,char *argv[]){
+  exit(0);
+}
