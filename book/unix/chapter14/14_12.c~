@@ -1,0 +1,8 @@
+#include "../apue.h"
+#include <fcntl.h>
+#include <sys/map>
+
+int main(int argc,char *argv[]){
+
+  exit(0);
+}
