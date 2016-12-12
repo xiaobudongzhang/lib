@@ -19,18 +19,18 @@ int main(void){
   }else if(pid>0){
     close(fd1[0]);
     close(fd2[1]);
-    printf("parent start\n");
+    //printf("parent start\n");
     while(fgets(line,MAXLINE,stdin)!=NULL){
      
       n=strlen(line);
-      printf("fgets:%s\n",line);
+      //printf("fgets:%s\n",line);
       if(write(fd1[1],line,n)!=n)
 	err_sys("write err to pipe");
-      printf("parent write end \n");
+      //printf("parent write end \n");
       if((n=read(fd2[0],line,MAXLINE))<0)
 	err_sys("read err from pipe");
       
-      printf("parent read end\n");
+      //printf("parent read end\n");
       if(n==0){
 	err_msg("child closed pipe");
 	break;
@@ -40,37 +40,37 @@ int main(void){
       if(fputs(line,stdout)==EOF)
 	err_sys("fputs err");
 
-      printf("line---%s\n",line);
-      printf("fputs end\n");
+      //printf("line---%s\n",line);
+      //printf("fputs end\n");
     }
     if(ferror(stdin))
       err_sys("fgets err on stdin");
-      printf("parent end\n");
+    //printf("parent end\n");
       exit(0);
       
   }else{
     //sleep(3);
-    printf("child start\n");
+    //printf("child start\n");
     close(fd1[1]);
     close(fd2[0]);
     if(fd1[0]!=STDIN_FILENO){
       if(dup2(fd1[0],STDIN_FILENO)!=STDIN_FILENO)
 	err_sys("dup2 err");
-      printf("STDIN_FILENO\n");
+      //printf("STDIN_FILENO\n");
       close(fd1[0]);
     }
 
     if(fd2[1]!=STDOUT_FILENO){
       if(dup2(fd2[1],STDOUT_FILENO)!=STDOUT_FILENO)
 	err_sys("dup2 err 2");
-      printf("STDOUT_FILENO\n");
+      //printf("STDOUT_FILENO\n");
       close(fd2[1]);
     }
    
-    printf("child mid\n");
+    //printf("child mid\n");
     if(execl("./add2","add2",(char *)0)<0)
       err_sys("execl err");
-    printf("child end");
+    //printf("child end");
   }
   exit(0);
 }
