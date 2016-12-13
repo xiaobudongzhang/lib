@@ -7,7 +7,7 @@ void TELL_WAIT(void){
 }
 
 void TELL_PARENT(pid_t pid){
-  if(write(pfd2[1],'c',1)!=1)
+  if(write(pfd2[1],"c",1)!=1)
     err_sys("tell parent err");
 
 }
@@ -21,7 +21,7 @@ void WAIT_PARENT(void){
 }
 
 void TELL_CHILD(pid_t pid){
-  if(write(pfd[1],"p",1)!=1)
+  if(write(pfd1[1],"p",1)!=1)
     err_sys("tell child err");
 }
 

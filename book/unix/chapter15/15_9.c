@@ -68,8 +68,9 @@ int main(void){
     }
    
     //printf("child mid\n");
-    if(execl("./add2","add2",(char *)0)<0)
-      err_sys("execl err");
+    //if(execl("/bin/awk","awk","-f","t",(char *)0)<0)
+    if(execl("./add2",(char *)0)<0)  
+    err_sys("execl err");
     //printf("child end");
   }
   exit(0);
