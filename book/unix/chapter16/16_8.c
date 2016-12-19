@@ -70,14 +70,15 @@ void serve(int sockfd){
   int clfd;
   FILE *fp;
   char buf[BUFLEN];
+  char abuf[256];
+  socklen_t alen;
+  int n;
   
   for(;;){
     open("tmp75", O_WRONLY|O_CREAT|O_TRUNC);
-    printf("in serve\n");
-    clfd=accept(sockfd,NULL,NULL);
-    if(clfd<0){
-      open("tmp79", O_WRONLY|O_CREAT|O_TRUNC);
-      syslog(LOG_ERR,"ruptimed:accept error:%s",strerror(errno));
+    alen=256;
+    if((n=recvfrom(sockfd,buf,BUFLEN,0,(struct sockaddr *)abuf,&alen))<0){
+      syslog(LOG_ERR,"ruptim error:%s",strerror(errno));
       exit(1);
     }
     printf("in serve2\n");
@@ -122,14 +123,14 @@ int main(int argc,char *argv[]){
     err_sys("gethostname error");
   
   
-  daemonize("ruptimed");
+  //daemonize("ruptimed");
   open("./tmp", O_WRONLY|O_CREAT|O_TRUNC);
   printf("hi\n");
   
   //memset(&hint, 0, sizeof hint);
-  hint.ai_flags=AI_PASSIVE;
+  hint.ai_flags=AI_CANONNAME;
   hint.ai_family=0;
-  hint.ai_socktype=SOCK_STREAM;
+  hint.ai_socktype=SOCK_DGRAM;
   hint.ai_protocol=0;
   hint.ai_addrlen=0;
   hint.ai_canonname=NULL;
@@ -139,7 +140,7 @@ int main(int argc,char *argv[]){
   printf("host %s\n",host);
   
   
-  if((err=getaddrinfo(argv[1],argv[2],&hint,&ailist))!=0){
+  if((err=getaddrinfo(argv[1],"ruptime",&hint,&ailist))!=0){
     printf("in log err\n");
     syslog(LOG_ERR,"ruptimed:getaddrinfo error:%s",gai_strerror(err));
     exit(1);
@@ -149,7 +150,7 @@ int main(int argc,char *argv[]){
   for(aip=ailist;aip!=NULL;aip=aip->ai_next){
     printf("in for to ss\n");
     //printf("%d\n",aip->ai_addrlen);
-    if((sockfd=initserver(SOCK_STREAM,aip->ai_addr,aip->ai_addrlen,QLEN))>=0){
+    if((sockfd=initserver(SOCK_DGRAM,aip->ai_addr,aip->ai_addrlen,QLEN))>=0){
       open("tmp152", O_WRONLY|O_CREAT|O_TRUNC);
       serve(sockfd);
       exit(0);

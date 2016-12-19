@@ -67,10 +67,11 @@ int initserver(int type,const struct sockaddr *addr,socklen_t alen,int qlen){
 }
 
 void serve(int sockfd){
-  int clfd;
+  int clfd,status;
   FILE *fp;
   char buf[BUFLEN];
-  
+  pid_t pid;
+
   for(;;){
     open("tmp75", O_WRONLY|O_CREAT|O_TRUNC);
     printf("in serve\n");
@@ -80,21 +81,23 @@ void serve(int sockfd){
       syslog(LOG_ERR,"ruptimed:accept error:%s",strerror(errno));
       exit(1);
     }
-    printf("in serve2\n");
-    open("tmp84", O_WRONLY|O_CREAT|O_TRUNC);
-    if((fp=popen("/usr/bin/uptime","r"))==NULL){
+    
+    if((pid=fork())<0){
+      syslog(LOG_ERR,"ruptimed:fork error:%s",strerror(errno));
+      exit(1);
+    }else if(pid==0){
       
-      sprintf(buf,"error:%s\n",strerror(errno));
-      send(clfd,buf,strlen(buf),0);
-      printf("in serve send");
-    }else{
-      open("tmp91", O_WRONLY|O_CREAT|O_TRUNC);
-      printf("innn\n");
-      while(fgets(buf,BUFLEN,fp)!=NULL){
-	send(clfd,buf,strlen(buf),0);
-	pclose(fp);
+      if(dup2(clfd,STDOUT_FILENO)!=STDOUT_FILENO||dup2(clfd,STDERR_FILENO)!=STDERR_FILENO){
+	syslog(LOG_ERR,"RUPTIMED:ERRPR");
+	exit(1);
       }
+      
       close(clfd);
+      execl("/usr/bin/uptime","uptime",(char *)0);
+      
+    }else{
+      close(clfd);
+      waitpid(pid,&status,0);
     }
   }
   printf("in serve3\n");

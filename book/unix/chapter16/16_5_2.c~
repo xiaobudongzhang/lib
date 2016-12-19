@@ -88,7 +88,6 @@ void serve(int sockfd){
       send(clfd,buf,strlen(buf),0);
       printf("in serve send");
     }else{
-      open("tmp91", O_WRONLY|O_CREAT|O_TRUNC);
       printf("innn\n");
       while(fgets(buf,BUFLEN,fp)!=NULL){
 	send(clfd,buf,strlen(buf),0);
