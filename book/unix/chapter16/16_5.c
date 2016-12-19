@@ -6,6 +6,8 @@
 #include <syslog.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
+#include <fcntl.h>
+#include <stdio.h>
 
 #define BUFLEN 128
 #define QLEN 5
@@ -24,6 +26,7 @@ int initserver(int type,const struct sockaddr *addr,socklen_t alen,int qlen){
       printf("init server2\n");
       return(-1);
   }
+  open("tmp29", O_WRONLY|O_CREAT|O_TRUNC);
   printf("init server3\n");
  
 
@@ -44,14 +47,16 @@ int initserver(int type,const struct sockaddr *addr,socklen_t alen,int qlen){
     err=errno;
     goto errout;
   }
+  open("tmp50", O_WRONLY|O_CREAT|O_TRUNC);
   printf("init server4\n");
   if(type==SOCK_STREAM||type==SOCK_SEQPACKET){
     if(listen(fdt,qlen)<0){
-    
+      open("tmp54", O_WRONLY|O_CREAT|O_TRUNC);
       err=errno;
       goto errout;
     }
   }
+  open("tmp59", O_WRONLY|O_CREAT|O_TRUNC);
   printf("init server\n");
   return(fdt);
   
@@ -67,19 +72,23 @@ void serve(int sockfd){
   char buf[BUFLEN];
   
   for(;;){
+    open("tmp75", O_WRONLY|O_CREAT|O_TRUNC);
     printf("in serve\n");
     clfd=accept(sockfd,NULL,NULL);
     if(clfd<0){
+      open("tmp79", O_WRONLY|O_CREAT|O_TRUNC);
       syslog(LOG_ERR,"ruptimed:accept error:%s",strerror(errno));
       exit(1);
     }
-    printf("in serve\n");
+    printf("in serve2\n");
+    open("tmp84", O_WRONLY|O_CREAT|O_TRUNC);
     if((fp=popen("/usr/bin/uptime","r"))==NULL){
       
       sprintf(buf,"error:%s\n",strerror(errno));
       send(clfd,buf,strlen(buf),0);
       printf("in serve send");
     }else{
+      printf("innn\n");
       while(fgets(buf,BUFLEN,fp)!=NULL){
 	send(clfd,buf,strlen(buf),0);
 	pclose(fp);
@@ -87,6 +96,7 @@ void serve(int sockfd){
       close(clfd);
     }
   }
+  printf("in serve3\n");
 }
 
 
@@ -111,7 +121,8 @@ int main(int argc,char *argv[]){
     err_sys("gethostname error");
   
   
-  //  daemonize("ruptimed");
+  daemonize("ruptimed");
+  open("./tmp", O_WRONLY|O_CREAT|O_TRUNC);
   printf("hi\n");
   
   //memset(&hint, 0, sizeof hint);
@@ -133,11 +144,12 @@ int main(int argc,char *argv[]){
     exit(1);
   }
   printf("start server\n");
-
+  open("tmp141", O_WRONLY|O_CREAT|O_TRUNC);
   for(aip=ailist;aip!=NULL;aip=aip->ai_next){
     printf("in for to ss\n");
     //printf("%d\n",aip->ai_addrlen);
     if((sockfd=initserver(SOCK_STREAM,aip->ai_addr,aip->ai_addrlen,QLEN))>=0){
+      open("tmp152", O_WRONLY|O_CREAT|O_TRUNC);
       serve(sockfd);
       exit(0);
     }
