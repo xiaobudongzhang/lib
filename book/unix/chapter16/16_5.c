@@ -127,7 +127,7 @@ int main(int argc,char *argv[]){
   printf("host %s\n",host);
   
   
-  if((err=getaddrinfo(host,argv[2],&hint,&ailist))!=0){
+  if((err=getaddrinfo(argv[1],argv[2],&hint,&ailist))!=0){
     printf("in log err\n");
     syslog(LOG_ERR,"ruptimed:getaddrinfo error:%s",gai_strerror(err));
     exit(1);
