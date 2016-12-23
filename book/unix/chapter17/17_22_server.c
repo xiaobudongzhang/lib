@@ -1,0 +1,69 @@
+#include "../apue.h"
+#include "../error.c"
+#include "send_err.c"
+#include "opend.h"
+#include "17_14_send_fd.c"
+#include "17_24_cli_args.c"
+
+#include <errno.h>
+#include <fcntl.h>
+#define CL_OPEN "open"
+
+
+
+char errmsg[MAXLINE];
+int oflag;
+char *pathname;
+
+//server
+int main(void){
+  
+  int nread;
+  char buf[MAXLINE];
+  
+  for(;;){
+    if((nread=read(STDIN_FILENO,buf,MAXLINE))<0)
+      err_sys("read eror on stream pipe");
+    else if(nread==0)
+      break;
+    
+    //buf[nread-1]=0;
+    //write(STDOUT_FILENO,buf,strlen(buf));  test
+    request(buf,nread,STDOUT_FILENO);
+  }
+  exit(0);
+}
+
+
+void request(char *buf,int nread,int fd){
+  int newfd;
+  if(buf[nread-1]!=0){//不是null结尾的话
+    sprintf(errmsg,"request not null terminated:%*.*s\n",nread,nread,buf);
+    send_err(fd,-1,errmsg);
+    return;
+  }
+  
+  if(buf_args(buf,cli_args)<0){
+      send_err(fd,-1,errmsg);
+    return;
+  }
+  
+  if((newfd=open(pathname,oflag))<0){
+    sprintf(errmsg,"cant open  %s:%s\n",pathname,strerror(errno));
+    send_err(fd,-1,errmsg);
+    return;
+  }
+  
+  char bc2[23];
+  int f2=    open("tmp58",O_WRONLY|O_CREAT|O_TRUNC);
+  sprintf(bc2,"len %d",newfd);
+  write(f2,bc2,strlen(bc2));
+  
+
+  printf("newfd %d\n",newfd);
+  
+  if(send_fd(fd,newfd)<0)
+    err_sys("send_fd error");
+  close(newfd);
+}
+

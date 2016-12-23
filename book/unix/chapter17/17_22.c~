@@ -1,0 +1,31 @@
+#include "../apue.h"
+#include <errno.h>
+
+#define CL_OPEN "open"
+
+extern char errmsg[];
+extern char oflag;
+extern char *pathname;
+
+int cli_args(int,char **);
+void request(char *,int,int);
+
+char errmsg[MAXLINE];
+int oflag;
+char *pathname;
+//server
+int main(void){
+  
+  int nread;
+  char buf[MAXLINE];
+  
+  for(;;){
+    if((nread=read(STDIN_FILENO,buf,MAXLINE))<0)
+      err_sys("read eror on stream pipe");
+    else if(nread==0)
+      break;
+    
+    request(buf,nread,STDOUT_FILENO);
+  }
+  exit(0);
+}

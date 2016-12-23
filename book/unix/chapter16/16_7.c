@@ -34,6 +34,7 @@ void print_uptime(int sockfd,struct addrinfo *aip){
 
   if(sendto(sockfd,buf,1,0,aip->ai_addr,aip->ai_addrlen)<0)
     err_sys("sendto error");
+
   printf("in pr_uptime28\n");
   alarm(TIMEOUT);
   if((n=recvfrom(sockfd,buf,BUFLEN,0,NULL,NULL))<0){
@@ -43,7 +44,6 @@ void print_uptime(int sockfd,struct addrinfo *aip){
     err_sys("recv error");
   }
   printf("in pr_uptime35\n");
-  alarm(0);
   write(STDOUT_FILENO,buf,n);
   printf("in pr_uptime38\n");
 }

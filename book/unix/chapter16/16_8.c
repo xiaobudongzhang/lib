@@ -37,7 +37,7 @@ int initserver(int type,const struct sockaddr *addr,socklen_t alen,int qlen){
   //if(addr->sa_family==AF_INET){
  addr2=inet_ntop(AF_INET,&sinp->sin_addr,abuf,INET_ADDRSTRLEN);
   printf(" address %s ",addr2?addr2:"unknown");
-  printf(" port %d ",ntohs(sinp->sin_port));
+  printf(" port %d \n",ntohs(sinp->sin_port));
   //}
 
   if(bind(fdt,addr,alen)<0){
@@ -50,14 +50,17 @@ int initserver(int type,const struct sockaddr *addr,socklen_t alen,int qlen){
   open("tmp50", O_WRONLY|O_CREAT|O_TRUNC);
   printf("init server4\n");
   if(type==SOCK_STREAM||type==SOCK_SEQPACKET){
+    printf("init server53\n");
     if(listen(fdt,qlen)<0){
+      printf("init server55\n");
       open("tmp54", O_WRONLY|O_CREAT|O_TRUNC);
       err=errno;
+      printf("%s\n",strerror(errno));
       goto errout;
     }
   }
   open("tmp59", O_WRONLY|O_CREAT|O_TRUNC);
-  printf("init server\n");
+  printf("init server62\n");
   return(fdt);
   
  errout:
@@ -67,7 +70,6 @@ int initserver(int type,const struct sockaddr *addr,socklen_t alen,int qlen){
 }
 
 void serve(int sockfd){
-  int clfd;
   FILE *fp;
   char buf[BUFLEN];
   char abuf[256];
@@ -81,21 +83,21 @@ void serve(int sockfd){
       syslog(LOG_ERR,"ruptim error:%s",strerror(errno));
       exit(1);
     }
+
     printf("in serve2\n");
     open("tmp84", O_WRONLY|O_CREAT|O_TRUNC);
     if((fp=popen("/usr/bin/uptime","r"))==NULL){
-      
+      printf("in serve error send");
       sprintf(buf,"error:%s\n",strerror(errno));
-      send(clfd,buf,strlen(buf),0);
-      printf("in serve send");
+      sendto(sockfd,buf,strlen(buf),0,(struct sockaddr *)abuf,alen);
+      
     }else{
       open("tmp91", O_WRONLY|O_CREAT|O_TRUNC);
       printf("innn\n");
-      while(fgets(buf,BUFLEN,fp)!=NULL){
-	send(clfd,buf,strlen(buf),0);
-	pclose(fp);
+      if(fgets(buf,BUFLEN,fp)!=NULL){
+	sendto(sockfd,buf,strlen(buf),0,(struct sockaddr *)abuf,alen);
       }
-      close(clfd);
+      pclose(fp);
     }
   }
   printf("in serve3\n");
@@ -123,7 +125,7 @@ int main(int argc,char *argv[]){
     err_sys("gethostname error");
   
   
-  //daemonize("ruptimed");
+  daemonize("ruptimed");
   open("./tmp", O_WRONLY|O_CREAT|O_TRUNC);
   printf("hi\n");
   
@@ -140,7 +142,7 @@ int main(int argc,char *argv[]){
   printf("host %s\n",host);
   
   
-  if((err=getaddrinfo(argv[1],"ruptime",&hint,&ailist))!=0){
+  if((err=getaddrinfo(argv[1],argv[2],&hint,&ailist))!=0){
     printf("in log err\n");
     syslog(LOG_ERR,"ruptimed:getaddrinfo error:%s",gai_strerror(err));
     exit(1);
