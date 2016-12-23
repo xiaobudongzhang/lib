@@ -1,0 +1,66 @@
+#include "../apue.h"
+#include "../error.c"
+#include <sys/stat.h>
+#include <dirent.h>
+#include <limits.h>
+#include <string.h>
+#include <termios.h>
+#include <unistd.h>
+#include <stdlib.h>
+
+int isatty2(fd){
+  struct termios ts;
+  return(tcgetattr(fd,&ts)!=-1);
+}
+
+struct devdir{
+  struct devdir *d_next;
+  char *d_name;
+}
+
+static struct devdir *head;
+static struct devdir *tail;
+static char pathname[_POSIX_PATH_MAX+1];
+
+static void add(char *dirname){
+  struct devdir *ddp;
+  int len;
+  
+  len=strlen(dirname);
+  
+}
+int main(void){
+  char *name;
+  
+  if(isatty2(0)){
+    name=ttyname2(0);
+    if(name==NULL)
+      name="undefined";
+  }else{
+    name="not a tty";
+  }
+
+  printf("fd 0 :%s\n",name);
+  
+  if(isatty2(1)){
+        name=ttyname2(1);
+        if(name==NULL)
+            name="undefined";
+      }else{
+        name="not a tty";
+      }
+
+    printf("fd 1 :%s\n",name);
+
+
+    if(isatty2(2)){
+       name=ttyname2(2);
+       if(name==NULL)
+           name="undefined";
+     }else{
+       name="not a tty";
+     }
+
+    printf("fd 2 :%s\n",name);
+  
+}
