@@ -97,7 +97,7 @@ int main(int argc,char *argv[]){
   }
 
   if(driver)
-    do_driver(driver);
+       do_driver(driver);
   
   loop(fdm,ignoreof);
   exit(0);
