@@ -1,0 +1,176 @@
+1,argv:/bin/bash
+]0;root@byz:~/unixlink/chapter19[?1034h[root@byz chapter19]# ls
+19_2.c            19_5_main.c~  [0m[01;32mpty[0m      tty_x.c~
+19_2.c~           19_6.c        [01;32mscri[0m     typscri
+19_4_pty_fork.c   19_6_loop.c   scri~
+19_4_pty_fork.c~  19_6_loop.c~  t.c
+19_5_main.c       [01;32ma.out[0m         tty_x.c
+]0;root@byz:~/unixlink/chapter19[root@byz chapter19]# cat typscri 
+1,argv:/bin/bash
+]0;root@byz:~/unixlink/chapter19[?1034h[root@byz chapter19]# ls
+19_2.c            19_5_main.c~  [0m[01;32mpty[0m      tty_x.c~
+19_2.c~           19_6.c        [01;32mscri[0m     typscri
+19_4_pty_fork.c   19_6_loop.c   scri~
+19_4_pty_fork.c~  19_6_loop.c~  t.c
+19_5_main.c       [01;32ma.out[0m         tty_x.c
+]0;root@byz:~/unixlink/chapter19[root@byz chapter19]# cat typscri 
+]0;root@byz:~/unixlink/chapter19[root@byz chapter19]# ps -ef|gee[K[Krep scri
+root      27214  24774  0 08:13 pts/2    00:00:00 /bin/bash ./[01;31m[Kscri[m[K
+root      27216  27214  0 08:13 pts/2    00:00:00 tee typ[01;31m[Kscri[m[K
+root      27232  27217  0 08:13 pts/0    00:00:00 grep --color=auto [01;31m[Kscri[m[K
+]0;root@byz:~/unixlink/chapter19[root@byz chapter19]# ps -ef|[K[K[K[K[Ks[Ktree -e[Kp 27216
+tee(27216)
+]0;root@byz:~/unixlink/chapter19[root@byz chapter19]# pstree -p 27216 -s
+systemd(1)───sshd(1105)───sshd(24770)───bash(2477+
+]0;root@byz:~/unixlink/chapter19[root@byz chapter19]# pstree -p 27216 -s
+systemd(1)───sshd(1105)───sshd(24770)───bash(2477+
+]0;root@byz:~/unixlink/chapter19[root@byz chapter19]# pstree -p 27216 -s|more
+systemd(1)---sshd(1105)---sshd(24770)---bash(24774
+)---scri(27214)---tee(27216)
+]0;root@byz:~/unixlink/chapter19[root@byz chapter19]# pstree -p 27216 -s|more[K[K -ef|grep scri[K[K[K[Kbash
+root      24729  24703  0 Dec24 pts/3    00:00:00 -[01;31m[Kbash[m[K
+root      24774  24770  0 Dec24 pts/2    00:00:00 -[01;31m[Kbash[m[K
+root      27214  24774  0 08:13 pts/2    00:00:00 /bin/[01;31m[Kbash[m[K ./scri
+root      27215  27214  0 08:13 pts/2    00:00:00 ./pty /bin/[01;31m[Kbash[m[K
+root      27217  27215  0 08:13 pts/0    00:00:00 /bin/[01;31m[Kbash[m[K
+root      27218  27215  0 08:13 pts/2    00:00:00 ./pty /bin/[01;31m[Kbash[m[K
+root      27239  27217  0 08:16 pts/0    00:00:00 grep --color=auto [01;31m[Kbash[m[K
+]0;root@byz:~/unixlink/chapter19[root@byz chapter19]# who
+root     pts/2        2016-12-24 21:40 (192.168.80.1)
+root     pts/3        2016-12-24 21:33 (192.168.80.1)
+]0;root@byz:~/unixlink/chapter19[root@byz chapter19]# whops -ef|grep bashtree -p 27216 -s|more[K[1P -s[1P -s1 -s5 -s
+systemd(1)───sshd(1105)───sshd(24770)───bash(2477+
+]0;root@byz:~/unixlink/chapter19[root@byz chapter19]# pstree -p 27215 -s|more
+systemd(1)---sshd(1105)---sshd(24770)---bash(24774
+)---scri(27214)---pty(27215)-+-bash(27217)-+-more(
+27261)
+                                                  
+                             |             `-pstre
+e(27260)
+                                                  
+                             `-pty(27218)
+]0;root@byz:~/unixlink/chapter19[root@byz chapter19]# pstree -p 27215 -s|more
+systemd(1)---sshd(1105)---sshd(24770)---bash(24774
+)---scri(27214)---pty(27215)-+-bash(27217)-+-more(
+27263)
+                                                  
+                             |             `-pstre
+e(27262)
+                                                  
+                             `-pty(27218)
+]0;root@byz:~/unixlink/chapter19[root@byz chapter19]# pstree -p 27215 -s|more[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Ka
+systemd --switched-root --system
+  ├─NetworkManager --no-daemon
+  │   ├─dhclient -d -q -sf...
+  │   └─2*[{NetworkManager}]
+  ├─agetty --noclear tty1 linux
+  ├─auditd -n
+  │   └─{auditd}
+  ├─crond -n
+  ├─dbus-daemon --system --address=systemd:--nof
+  │   └─{dbus-daemon}
+  ├─lvmetad -f
+  ├─master -w
+  │   ├─pickup -l -t unix -u
+  │   └─qmgr -l -t unix -u
+  ├─mysqld --daemonize--pid-file=/var/run/m
+  │   └─26*[{mysqld}]
+  ├─polkitd --no-debug
+  │   └─5*[{polkitd}]
+  ├─rsyslogd -n
+  │   └─2*[{rsyslogd}]
+  ├─server2
+  ├─sshd -D
+  │   ├─sshd    
+  │   │   └─bash
+  │   │       └─emacs
+  │   └─sshd    
+  │       └─bash
+  │           └─scri ./scri
+  │               ├─pty /bin/bash
+  │               │   ├─bash
+  │               │   │   └─pstree -a
+  │               │   └─pty /bin/bash
+  │               └─tee typscri
+  ├─systemd-journal
+  ├─systemd-logind
+  ├─systemd-udevd
+  ├─tuned -Es /usr/sbin/tuned -l -P
+  │   └─4*[{tuned}]
+  └─wpa_supplicant -u -f/var/log/wpa_suppli
+]0;root@byz:~/unixlink/chapter19[root@byz chapter19]# pstree -a -p
+systemd,1 --switched-root --system
+  ├─NetworkManager,886 --no-daemon
+  │   ├─dhclient,25410 -d -q -sf...
+  │   ├─{NetworkManager},896
+  │   └─{NetworkManager},900
+  ├─agetty,895 --noclear tty1 linux
+  ├─auditd,849 -n
+  │   └─{auditd},858
+  ├─crond,890 -n
+  ├─dbus-daemon,876 --system ...
+  │   └─{dbus-daemon},885
+  ├─lvmetad,731 -f
+  ├─master,1736 -w
+  │   ├─pickup,26857 -l -t unix -u
+  │   └─qmgr,1743 -l -t unix -u
+  ├─mysqld,1192 --daemonize--pid-file=/var/run/m
+  │   ├─{mysqld},1409
+  │   ├─{mysqld},1425
+  │   ├─{mysqld},1426
+  │   ├─{mysqld},1427
+  │   ├─{mysqld},1428
+  │   ├─{mysqld},1429
+  │   ├─{mysqld},1430
+  │   ├─{mysqld},1431
+  │   ├─{mysqld},1432
+  │   ├─{mysqld},1433
+  │   ├─{mysqld},1434
+  │   ├─{mysqld},1437
+  │   ├─{mysqld},1747
+  │   ├─{mysqld},1748
+  │   ├─{mysqld},1749
+  │   ├─{mysqld},1750
+  │   ├─{mysqld},1751
+  │   ├─{mysqld},1752
+  │   ├─{mysqld},1753
+  │   ├─{mysqld},1754
+  │   ├─{mysqld},1767
+  │   ├─{mysqld},1768
+  │   ├─{mysqld},1769
+  │   ├─{mysqld},1770
+  │   ├─{mysqld},2125
+  │   └─{mysqld},2127
+  ├─polkitd,904 --no-debug
+  │   ├─{polkitd},906
+  │   ├─{polkitd},907
+  │   ├─{polkitd},908
+  │   ├─{polkitd},909
+  │   └─{polkitd},910
+  ├─rsyslogd,872 -n
+  │   ├─{rsyslogd},881
+  │   └─{rsyslogd},882
+  ├─server2,20234
+  ├─sshd,1105 -D
+  │   ├─sshd,24703    
+  │   │   └─bash,24729
+  │   │       └─emacs,26935
+  │   └─sshd,24770    
+  │       └─bash,24774
+  │           └─scri,27214 ./scri
+  │               ├─pty,27215 /bin/bash
+  │               │   ├─bash,27217
+  │               │   │   └─pstree,27265 -a ...
+  │               │   └─pty,27218 /bin/bash
+  │               └─tee,27216 typscri
+  ├─systemd-journal,721
+  ├─systemd-logind,887
+  ├─systemd-udevd,747
+  ├─tuned,1104 -Es /usr/sbin/tuned -l -P
+  │   ├─{tuned},1331
+  │   ├─{tuned},1333
+  │   ├─{tuned},1336
+  │   └─{tuned},1344
+  └─wpa_supplicant,903 -u -f/var/log/wpa_suppli
+]0;root@byz:~/unixlink/chapter19[root@byz chapter19]# exit
+exit
