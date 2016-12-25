@@ -1,0 +1,9 @@
+#include <stdio.h>
+void mik(int);
+
+int main(void){
+  int pooh=2,bah=5;
+  
+  printf("1:%d,%p\n",pooh,pooh);
+  printf("2:%d,%p\n",bah,bah);
+}
