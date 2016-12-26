@@ -23,6 +23,7 @@ int main(void){
   
   --ptr1;
   ++ptr2;
+  
   printf("\norigin pointer\n");
   printf("ptr1=%p,ptr2=%p\n",
 	 ptr1,ptr2);

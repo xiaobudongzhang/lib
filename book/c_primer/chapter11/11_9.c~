@@ -1,0 +1,6 @@
+#include <stdio.h>
+int main(void){
+  char dont[]={'W','O','W','!'};
+  puts(dont);
+  return(0);
+}

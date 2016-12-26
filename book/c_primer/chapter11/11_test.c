@@ -1,0 +1,9 @@
+#include <stdio.h>
+
+int main(void){
+   char *p1="Kligon";
+  p1[0]='F';
+  printf("Kligon");
+  printf(":Beware thr %ss!\n","Kligon");
+  return(0);
+}

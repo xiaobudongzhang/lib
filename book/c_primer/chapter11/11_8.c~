@@ -1,0 +1,15 @@
+#include <stdio.h>
+#define DEF "i am def";
+int main(void){
+  char str1[10]="1234567 89";
+  const char *str2="A to string";
+  
+  puts("I am to puts");
+  puts(DEF);
+  puts(str1);
+  puts(str2);
+  puts(&str1[3]);
+  puts(str2+2);
+  puts(&str1);
+  
+}
