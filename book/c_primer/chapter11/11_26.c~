@@ -1,0 +1,23 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#define LIMIT 80
+void ToUpper(char *);
+
+int main(void){
+  char line[LIMIT];
+  
+  line="aabbccddefdg";
+  
+  ToUpper(line);
+  puts(line);
+  return(0);
+}
+
+void ToUpper(char *str){
+  while(*str)
+ {
+   *str=toupper(*str);
+   str++;
+ }
+}

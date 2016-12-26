@@ -1,0 +1,17 @@
+#include <stdio.h>
+#include <stdlib.h>
+int main(void){
+  double *ptd;
+  int max;
+  int number;
+  int i=0;
+
+  puts("What ?");
+  scanf("%d",&max);
+  ptd=(double*)malloc(max * sizeof(double));
+  
+  if(ptd==NULL){
+    fprintf("malloc fail!",stdout);
+    exit(EXIT_FAILURE);
+  }
+}
