@@ -1,0 +1,15 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 40
+int main(void){
+  File *fp;
+  fp=fopen("./tmp",'r');
+  char words[MAX];
+
+  while(fscanf(fp,"%s",words)==1
+	puts(words);
+	
+  fclose(fd);
+  
+}
