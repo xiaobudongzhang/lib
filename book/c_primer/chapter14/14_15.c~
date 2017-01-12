@@ -1,0 +1,37 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+
+enum specnum {red,orange,yellow};
+const char * colors[]={
+  "red","orange","yellow"
+};
+#define LEN 30
+
+int main(void){
+  char choice[LEN];
+  enum specnum color;
+  bool color_is_fount=false;
+  
+  puts("enter color");
+  while(fgets(choice,sizeof(choice),stdin)!=NULL&&choice[0]!='\n'){
+    for(color=red;color<=yellow;color++){
+      if(strcmp(choice,colors[color])==0){
+	color_is_found=true;
+	break;
+      }
+    }
+    
+    if(color_is_found)
+      switch(color){
+      case red:puts("red");break;
+      case orange:puts("orange");break;
+      default:puts("default");
+      }
+    color_is_found=false;
+    puts("next color");
+  }
+  
+  puts("goodbye");
+  return 0;
+}

@@ -1,0 +1,18 @@
+#include <stdio.h>
+char *itobs(int,char *);
+void show_bstr(const char *);
+
+int main(void){
+  char bin_str[8*sizeof(int)+1];
+  int number;
+  
+  puts("enter int");
+  while(scanf("%d",&number)==1){
+    itobs(number,bin_str);
+    printf("%d is",number);
+    show_bstr(bin_str);
+    putchar('\n');
+  }
+  puts("bye");
+  return 0;
+}
