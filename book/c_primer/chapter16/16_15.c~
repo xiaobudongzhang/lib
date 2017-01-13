@@ -1,0 +1,7 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define NUM 10
+void fillarray(double ar[],int n);
+void showarray(const double ar[],int n);
+int mycomp(const void *p1,const void *p2);

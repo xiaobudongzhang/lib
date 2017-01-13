@@ -1,0 +1,14 @@
+#include <stdio.h>
+void me(void);
+
+int main(void){
+
+  printf("__FILE__\n",__FILE__);
+  printf("__DATE__\n",__DATE__);
+  printf("__TIME__\n",__TIME_);
+  printf("version\n",__STDC_VERSION__);
+  printf("line\n",__LINE__);
+  printf("function\n",__func__);
+  
+  return 0;
+}
