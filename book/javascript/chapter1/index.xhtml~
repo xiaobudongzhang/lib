@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+hello
+<hr>
+
+<script type="text/javascript">
+function compare(a,b){
+  if(a<b){
+	 console.log("in if")
+	 }else if(a>b){
+	 console.log("in else if")
+	 }else {
+	 console.log("in else")
+	 }
+}
+
+compare(1,2);
+</script>
+</body>
+</html>
